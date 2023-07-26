@@ -10,13 +10,13 @@ public class p1Sprite : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     public Sprite sprite;
 
-    [SerializeField] PokeStatus pokeStatus;
+    [SerializeField] PokeStatusTeam1 pokeStatus;
     private int randNum;
     // Start is called before the first frame update
     void Start()
     {
         
-        randNum = pokeStatus.randNumberPoke1;
+        randNum = pokeStatus.randNumberP1;
         string newRandNum = randNum.ToString();
         if(randNum < 10)
         {

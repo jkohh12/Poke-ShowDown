@@ -4,19 +4,18 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-
 public class p2Sprite : MonoBehaviour
 {
     [SerializeField] SpriteRenderer spriteRenderer;
     public Sprite sprite;
 
-    [SerializeField] PokeStatusP2 pokeStatus;
+    [SerializeField] PokeStatusTeam2 pokeStatus;
     private int randNum;
     // Start is called before the first frame update
     void Start()
     {
 
-        randNum = pokeStatus.randNumberPoke2;
+        randNum = pokeStatus.randNumberP2;
         string newRandNum = randNum.ToString();
         if (randNum < 10)
         {
@@ -42,7 +41,4 @@ public class p2Sprite : MonoBehaviour
         spriteRenderer.sprite = sprite;
 
     }
-
-
-
 }

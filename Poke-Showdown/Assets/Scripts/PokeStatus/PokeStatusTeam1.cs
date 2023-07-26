@@ -6,11 +6,10 @@ using TMPro;
 using UnityEngine.Networking;
 
 
-public class PokeStatus : MonoBehaviour
+public class PokeStatusTeam1 : MonoBehaviour
 {
-    [SerializeField] RandomNumberManager randomNumberGeneratorP1;
+    public int randNumberP1;
 
-    public int randNumberPoke1;
     public TextMeshProUGUI text;
     public class Ability
     {
@@ -424,9 +423,9 @@ public class PokeStatus : MonoBehaviour
     }
     private void Awake()
     {
-        randNumberPoke1 = randomNumberGeneratorP1.randomNumberP1;
-        Debug.Log(randNumberPoke1);
-        StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberPoke1.ToString()));
+        randNumberP1 = Random.Range(1, 650);                                                                                                   
+        Debug.Log(randNumberP1);
+        StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberP1.ToString()));
 
     }
 

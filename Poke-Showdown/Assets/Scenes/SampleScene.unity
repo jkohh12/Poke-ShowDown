@@ -708,8 +708,6 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
-  - component: {fileID: 519420036}
-  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -803,8 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3970761fa351f3744ab9ddcc8d88366e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomNumberGeneratorP1: {fileID: 519420034}
-  randNumberPoke1: 0
+  randNumberP1: 0
   text: {fileID: 1439085354}
 --- !u!114 &519420034
 MonoBehaviour:
@@ -815,37 +812,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f20e8fa4089ef547b06bb1e66b44699, type: 3}
+  m_Script: {fileID: 11500000, guid: 66e2dd597cf4daa4da7d785dd7ec9333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomNumberP1: 0
---- !u!114 &519420035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0baf0e6fb14a9cb4082a99896f0cce14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  randomNumberP2: 0
---- !u!114 &519420036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dfd1bd0087bb6e41b56843097e92c31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  randomNumberGeneratorP2: {fileID: 519420035}
-  randNumberPoke2: 0
+  randNumberP2: 0
   text: {fileID: 393966568}
 --- !u!1 &813388230
 GameObject:
@@ -1193,9 +1163,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1641815070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdb18dbb7f69c8a4dbb9b3db261bc912, type: 3}
+  m_Script: {fileID: 11500000, guid: 77bae08e75fc89f4eb4b17cba992b923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1641815072}
   sprite: {fileID: 0}
-  pokeStatus: {fileID: 519420036}
+  pokeStatus: {fileID: 519420034}
