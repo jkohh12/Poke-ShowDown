@@ -16,7 +16,7 @@ public class p2Sprite : MonoBehaviour
     void Start()
     {
 
-        randNum = pokeStatus.randNumber;
+        randNum = pokeStatus.randNumberPoke2;
         string newRandNum = randNum.ToString();
         if (randNum < 10)
         {

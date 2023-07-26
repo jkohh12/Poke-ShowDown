@@ -5,9 +5,9 @@ using UnityEngine;
 public class RandomNumberManager : MonoBehaviour
 {
 
-    public int randomNumber;
+    public int randomNumberP1;
     private void Awake()
     {
-        randomNumber = Random.Range(1, 650);
+        randomNumberP1 = Random.Range(1, 650);
     }
 }

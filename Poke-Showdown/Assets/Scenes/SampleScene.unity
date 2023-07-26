@@ -391,7 +391,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 80, y: -73}
+  m_AnchoredPosition: {x: 82, y: -112}
   m_SizeDelta: {x: 409.1233, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &393966568
@@ -693,7 +693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 456636169}
-  sprite: {fileID: 456636169}
+  sprite: {fileID: 0}
   pokeStatus: {fileID: 519420033}
 --- !u!1 &519420028
 GameObject:
@@ -803,8 +803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3970761fa351f3744ab9ddcc8d88366e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomNumberGenerator: {fileID: 519420034}
-  randNumber: 0
+  randomNumberGeneratorP1: {fileID: 519420034}
+  randNumberPoke1: 0
   text: {fileID: 1439085354}
 --- !u!114 &519420034
 MonoBehaviour:
@@ -818,7 +818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f20e8fa4089ef547b06bb1e66b44699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomNumber: 0
+  randomNumberP1: 0
 --- !u!114 &519420035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,8 +844,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dfd1bd0087bb6e41b56843097e92c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomNumberGenerator: {fileID: 519420035}
-  randNumber: 0
+  randomNumberGeneratorP2: {fileID: 519420035}
+  randNumberPoke2: 0
   text: {fileID: 393966568}
 --- !u!1 &813388230
 GameObject:
@@ -999,7 +999,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -439, y: 131}
+  m_AnchoredPosition: {x: -477, y: 101}
   m_SizeDelta: {x: 409.1233, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1439085354

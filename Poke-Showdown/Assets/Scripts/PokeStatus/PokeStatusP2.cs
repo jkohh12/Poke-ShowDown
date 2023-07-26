@@ -8,9 +8,9 @@ using UnityEngine.Networking;
 
 public class PokeStatusP2 : MonoBehaviour
 {
-    [SerializeField] RandomNumberManagerP2 randomNumberGenerator;
+    [SerializeField] RandomNumberManagerP2 randomNumberGeneratorP2;
 
-    public int randNumber;
+    public int randNumberPoke2;
     public TextMeshProUGUI text;
     public class Ability
     {
@@ -424,9 +424,9 @@ public class PokeStatusP2 : MonoBehaviour
     }
     private void Awake()
     {
-        randNumber = randomNumberGenerator.randomNumberP2;
-        Debug.Log(randNumber);
-        StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumber.ToString()));
+        randNumberPoke2 = randomNumberGeneratorP2.randomNumberP2;
+        Debug.Log(randNumberPoke2);
+        StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberPoke2.ToString()));
 
     }
 
