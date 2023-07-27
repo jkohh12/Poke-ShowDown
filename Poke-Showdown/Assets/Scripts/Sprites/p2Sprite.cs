@@ -25,7 +25,7 @@ public class p2Sprite : MonoBehaviour
         {
             newRandNum = "0" + randNum.ToString();
         }
-        Debug.Log(randNum);
+        //Debug.Log(randNum);
         AsyncOperationHandle<Sprite> spriteHandle = Addressables.LoadAssetAsync<Sprite>("Assets/PokemonSprites/NORMAL/FRONT/GIF/" + newRandNum + ".gif");
         spriteHandle.Completed += LoadSpritesWhenReady;
 

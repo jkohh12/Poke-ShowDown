@@ -205,7 +205,7 @@ public class PokeStatusTeam2 : MonoBehaviour
 
     public class Move
     {
-        public Move move { get; set; }
+        public Move2 move { get; set; }
         public List<VersionGroupDetail> version_group_details { get; set; }
     }
 
@@ -424,7 +424,7 @@ public class PokeStatusTeam2 : MonoBehaviour
     private void Awake()
     {
         randNumberP2 = Random.Range(1, 650);                                                                                                   
-        Debug.Log(randNumberP2);
+       // Debug.Log(randNumberP2);
         StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberP2.ToString()));
 
     }
@@ -443,13 +443,30 @@ public class PokeStatusTeam2 : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:
 
+                    // name/id
                     Form name = JsonConvert.DeserializeObject<Form>(webRequest.downloadHandler.text);
                     //GameIndex test = JsonConvert.DeserializeObject<GameIndex>(webRequest.downloadHandler.text);
-                    PokeStats test = JsonConvert.DeserializeObject<PokeStats>(webRequest.downloadHandler.text);
+                    PokeStats id = JsonConvert.DeserializeObject<PokeStats>(webRequest.downloadHandler.text);
                     string initName = name.name;
                     string Capitalized = char.ToUpper(initName[0]) + initName.Substring(1);
-                    text.text = test.id.ToString() + " " + Capitalized;
-               
+                    text.text = id.id.ToString() + " " + Capitalized;
+
+                    // moves
+                    PokeStats moveTest = JsonConvert.DeserializeObject<PokeStats>(webRequest.downloadHandler.text);
+                    //List<Move> tester = move.moves;
+                    List<Move> tester = moveTest.moves;
+                    //string moveOutput = tester[0].move.name;
+
+                   // Debug.Log(moveOutput);
+                    // Debug.Log(moveName);
+                    for(int i = 0; i < tester.Count; i++)
+                    {
+                        Debug.Log(tester[i].move.name);
+                    }
+                    //Debug.Log(tester);
+
+
+
                     break;
             
             }

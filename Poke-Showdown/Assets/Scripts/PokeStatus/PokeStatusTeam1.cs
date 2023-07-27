@@ -424,7 +424,7 @@ public class PokeStatusTeam1 : MonoBehaviour
     private void Awake()
     {
         randNumberP1 = Random.Range(1, 650);                                                                                                   
-        Debug.Log(randNumberP1);
+       // Debug.Log(randNumberP1);
         StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberP1.ToString()));
 
     }
@@ -448,8 +448,7 @@ public class PokeStatusTeam1 : MonoBehaviour
                     PokeStats test = JsonConvert.DeserializeObject<PokeStats>(webRequest.downloadHandler.text);
                     string initName = name.name;
                     string Capitalized = char.ToUpper(initName[0]) + initName.Substring(1);
-                    text.text = test.id.ToString() + " " + Capitalized;
-               
+                    text.text = test.id.ToString() + " " + Capitalized;            
                     break;
             
             }
