@@ -11,6 +11,11 @@ public class PokeStatusTeam2 : MonoBehaviour
     public int randNumberP2;
 
     public TextMeshProUGUI text;
+
+    [Header("Move/Stat")]
+    public List<Move> movesGlobal;
+    public List<Stat> statsGlobal;
+
     public class Ability
     {
         public Ability ability { get; set; }
@@ -329,7 +334,7 @@ public class PokeStatusTeam2 : MonoBehaviour
     {
         public int base_stat { get; set; }
         public int effort { get; set; }
-        public Stat stat { get; set; }
+        public Stat2 stat { get; set; }
     }
 
     public class Stat2
@@ -341,7 +346,7 @@ public class PokeStatusTeam2 : MonoBehaviour
     public class Type
     {
         public int slot { get; set; }
-        public Type type { get; set; }
+        public Type2 type { get; set; }
     }
 
     public class Type2
@@ -443,26 +448,35 @@ public class PokeStatusTeam2 : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:
 
-                    // name/id
+                    //API calls
                     Form name = JsonConvert.DeserializeObject<Form>(webRequest.downloadHandler.text);
-                    //GameIndex test = JsonConvert.DeserializeObject<GameIndex>(webRequest.downloadHandler.text);
-                    PokeStats id = JsonConvert.DeserializeObject<PokeStats>(webRequest.downloadHandler.text);
+                    PokeStats pokestats = JsonConvert.DeserializeObject<PokeStats>(webRequest.downloadHandler.text);
+                
+                    // name/id
                     string initName = name.name;
                     string Capitalized = char.ToUpper(initName[0]) + initName.Substring(1);
-                    text.text = id.id.ToString() + " " + Capitalized;
+                    text.text = Capitalized;
 
                     // moves
-                    PokeStats moveTest = JsonConvert.DeserializeObject<PokeStats>(webRequest.downloadHandler.text);
-                    //List<Move> tester = move.moves;
-                    List<Move> tester = moveTest.moves;
-                    //string moveOutput = tester[0].move.name;
+                    movesGlobal = pokestats.moves;
 
-                   // Debug.Log(moveOutput);
-                    // Debug.Log(moveName);
-                    for(int i = 0; i < tester.Count; i++)
+
+
+                    //stats
+                    statsGlobal = pokestats.stats;
+
+
+
+                    //for debugging
+/*                    for(int i = 0; i < stats.Count; i++)
                     {
-                        Debug.Log(tester[i].move.name);
-                    }
+                        Debug.Log(stats[i].base_stat);
+                        Debug.Log(stats[i].stat.name);
+                    }*/
+/*                    for(int i = 0; i < movesGlobal.Count; i++)
+                    {
+                        Debug.Log(movesGlobal[i].move.name);
+                    }*/
                     //Debug.Log(tester);
 
 

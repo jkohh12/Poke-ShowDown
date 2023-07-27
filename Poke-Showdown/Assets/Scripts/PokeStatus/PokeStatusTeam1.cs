@@ -329,7 +329,7 @@ public class PokeStatusTeam1 : MonoBehaviour
     {
         public int base_stat { get; set; }
         public int effort { get; set; }
-        public Stat stat { get; set; }
+        public Stat2 stat { get; set; }
     }
 
     public class Stat2
@@ -341,7 +341,7 @@ public class PokeStatusTeam1 : MonoBehaviour
     public class Type
     {
         public int slot { get; set; }
-        public Type type { get; set; }
+        public Type2 type { get; set; }
     }
 
     public class Type2
@@ -444,11 +444,14 @@ public class PokeStatusTeam1 : MonoBehaviour
                 case UnityWebRequest.Result.Success:
 
                     Form name = JsonConvert.DeserializeObject<Form>(webRequest.downloadHandler.text);
-                    //GameIndex test = JsonConvert.DeserializeObject<GameIndex>(webRequest.downloadHandler.text);
-                    PokeStats test = JsonConvert.DeserializeObject<PokeStats>(webRequest.downloadHandler.text);
+
+
                     string initName = name.name;
+
+
+                    
                     string Capitalized = char.ToUpper(initName[0]) + initName.Substring(1);
-                    text.text = test.id.ToString() + " " + Capitalized;            
+                    text.text = Capitalized;            
                     break;
             
             }

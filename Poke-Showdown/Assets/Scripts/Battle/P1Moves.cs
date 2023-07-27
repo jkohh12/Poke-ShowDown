@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class P1Moves : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     [SerializeField] PokeStatusTeam1 pokemon;
     void Start()
     {
