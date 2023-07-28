@@ -13,8 +13,8 @@ public class PokeStatusTeam2 : MonoBehaviour
     public TextMeshProUGUI text;
 
     [Header("Move/Stat")]
-    public List<Move> movesGlobal;
-    public List<Stat> statsGlobal;
+    public List<Move> movesGlobalP2;
+    public List<Stat> statsGlobalP2;
 
     public class Ability
     {
@@ -458,12 +458,12 @@ public class PokeStatusTeam2 : MonoBehaviour
                     text.text = Capitalized;
 
                     // moves
-                    movesGlobal = pokestats.moves;
+                    movesGlobalP2 = pokestats.moves;
 
 
 
                     //stats
-                    statsGlobal = pokestats.stats;
+                    statsGlobalP2 = pokestats.stats;
 
 
 

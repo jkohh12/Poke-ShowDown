@@ -9,14 +9,14 @@ public class P2Moves : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] PokeStatusTeam2 pokemon;
 
-    public List<moveStats> movePoolAttack = new List<moveStats>();
-    public List<string> moveSet = new List<string>();
+    public List<moveStats> movePoolAttackP2 = new List<moveStats>();
+    public List<moveStats> moveSetP2 = new List<moveStats>();
 
     private int randomNum;
 
-    private int moveCounter = 0;
+    private int moveCounter = 0;    
 
-    public bool poolFull;
+    public bool poolFullP2;
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Ailment
     {
@@ -189,15 +189,14 @@ public class P2Moves : MonoBehaviour
 
     private void Start()
     {
-        poolFull = false;
+    
 
-        for (int i = 0; i < pokemon.movesGlobal.Count; i++)
+        for (int i = 0; i < pokemon.movesGlobalP2.Count; i++)
         {
-            StartCoroutine(GetRequest("https://pokeapi.co/api/v2/move/" + pokemon.movesGlobal[i].move.name));
+            StartCoroutine(GetRequest("https://pokeapi.co/api/v2/move/" + pokemon.movesGlobalP2[i].move.name));
 
         }
 
-        poolFull = true;
 
        
 
@@ -228,11 +227,16 @@ public class P2Moves : MonoBehaviour
 
                     //moveStats test = moveStat;
                     int? movePower = moveStat.power;
+                    poolFullP2 = false;
+
                     if (movePower.HasValue)
                     {
-                        movePoolAttack.Add(moveStat);
+                        movePoolAttackP2.Add(moveStat);
                       
                     }
+
+                    poolFullP2 = true;
+
 
                     break;
 
@@ -243,10 +247,11 @@ public class P2Moves : MonoBehaviour
     // Update is called once per frame
     private void Update()
     { 
-        if (poolFull && moveCounter <= 3)
+        if (poolFullP2 && moveCounter <= 3)
         {
-            randomNum = Random.Range(0, movePoolAttack.Count - 1); //number in between 0 and end of movePoolAttack list
-            moveSet.Add(movePoolAttack[randomNum].name);
+            randomNum = Random.Range(0, movePoolAttackP2.Count - 1); //number in between 0 and end of movePoolAttack list
+            moveSetP2.Add(movePoolAttackP2[randomNum]);
+            Debug.Log("Player 2" + moveSetP2[moveCounter].name);
             moveCounter++;
         }
 

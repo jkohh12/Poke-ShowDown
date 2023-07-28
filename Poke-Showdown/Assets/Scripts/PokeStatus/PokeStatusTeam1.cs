@@ -11,6 +11,11 @@ public class PokeStatusTeam1 : MonoBehaviour
     public int randNumberP1;
 
     public TextMeshProUGUI text;
+
+    [Header("Move/Stat")]
+    public List<Move> movesGlobalP1;
+    public List<Stat> statsGlobalP1;
+
     public class Ability
     {
         public Ability ability { get; set; }
@@ -205,7 +210,7 @@ public class PokeStatusTeam1 : MonoBehaviour
 
     public class Move
     {
-        public Move move { get; set; }
+        public Move2 move { get; set; }
         public List<VersionGroupDetail> version_group_details { get; set; }
     }
 
@@ -443,15 +448,22 @@ public class PokeStatusTeam1 : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:
 
+                    //API calls
                     Form name = JsonConvert.DeserializeObject<Form>(webRequest.downloadHandler.text);
+                    PokeStats pokestats = JsonConvert.DeserializeObject<PokeStats>(webRequest.downloadHandler.text);
 
-
+                    // name/id
                     string initName = name.name;
-
-
-                    
                     string Capitalized = char.ToUpper(initName[0]) + initName.Substring(1);
-                    text.text = Capitalized;            
+                    text.text = Capitalized;
+
+                    // moves
+                    movesGlobalP1 = pokestats.moves;
+
+
+
+                    //stats
+                    statsGlobalP1 = pokestats.stats;
                     break;
             
             }
