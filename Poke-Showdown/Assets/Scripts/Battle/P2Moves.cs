@@ -9,14 +9,14 @@ public class P2Moves : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] PokeStatusTeam2 pokemon;
 
-    public List<moveStats> movePoolAttack;
-    public List<string> moveSet;
+    public List<moveStats> movePoolAttack = new List<moveStats>();
+    public List<string> moveSet = new List<string>();
 
     private int randomNum;
 
-    private int moveCounter = 1;
+    private int moveCounter = 0;
 
-    private bool poolFull;
+    public bool poolFull;
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Ailment
     {
@@ -194,8 +194,11 @@ public class P2Moves : MonoBehaviour
         for (int i = 0; i < pokemon.movesGlobal.Count; i++)
         {
             StartCoroutine(GetRequest("https://pokeapi.co/api/v2/move/" + pokemon.movesGlobal[i].move.name));
+
         }
+
         poolFull = true;
+
        
 
     }
@@ -222,11 +225,14 @@ public class P2Moves : MonoBehaviour
                     break;
                 case UnityWebRequest.Result.Success:
                     moveStats moveStat = JsonConvert.DeserializeObject<moveStats>(webRequest.downloadHandler.text);
+
+                    //moveStats test = moveStat;
                     int? movePower = moveStat.power;
-              /*      if (movePower.HasValue)
-                    {*/
+                    if (movePower.HasValue)
+                    {
                         movePoolAttack.Add(moveStat);
-                    //}
+                      
+                    }
 
                     break;
 
@@ -235,15 +241,14 @@ public class P2Moves : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-/*        if (poolFull && moveCounter <= 4)
+    private void Update()
+    { 
+        if (poolFull && moveCounter <= 3)
         {
             randomNum = Random.Range(0, movePoolAttack.Count - 1); //number in between 0 and end of movePoolAttack list
-
-
+            moveSet.Add(movePoolAttack[randomNum].name);
             moveCounter++;
-        }*/
+        }
 
     }
 }
