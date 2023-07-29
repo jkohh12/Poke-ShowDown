@@ -9,10 +9,6 @@ using UnityEngine.Networking;
 public class PokeStatusTeam1 : MonoBehaviour
 {
 
-    List<string> ground;
-
-
-
     public int randNumberP1;
 
     public TextMeshProUGUI text;
