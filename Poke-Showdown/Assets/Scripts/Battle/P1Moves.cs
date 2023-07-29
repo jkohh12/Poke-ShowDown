@@ -14,9 +14,10 @@ public class P1Moves : MonoBehaviour
 
     private int randomNum;
 
-    private int moveCounter = 0;
+    public int moveCounterP1 = 0;
 
     public bool poolFullP1;
+
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Ailment
     {
@@ -247,12 +248,14 @@ public class P1Moves : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (poolFullP1 && moveCounter <= 3)
+
+       // Debug.Log(movePoolAttackP1);
+        if (poolFullP1 && moveCounterP1 <= 3)
         {
             randomNum = Random.Range(0, movePoolAttackP1.Count - 1); //number in between 0 and end of movePoolAttack list
             moveSetP1.Add(movePoolAttackP1[randomNum]);
-            Debug.Log("Player 1" + moveSetP1[moveCounter].name);
-            moveCounter++;
+            //Debug.Log("Player 1" + moveSetP1[moveCounter].name);
+            moveCounterP1++;
         }
 
     }

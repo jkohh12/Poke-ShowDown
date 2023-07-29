@@ -16,6 +16,8 @@ public class PokeStatusTeam2 : MonoBehaviour
     public List<Move> movesGlobalP2;
     public List<Stat> statsGlobalP2;
 
+    [Header("Health")]
+    [SerializeField] P2HealthBar p2Health;
     public class Ability
     {
         public Ability ability { get; set; }
@@ -464,6 +466,11 @@ public class PokeStatusTeam2 : MonoBehaviour
 
                     //stats
                     statsGlobalP2 = pokestats.stats;
+
+                    //health
+                    p2Health.SetMaxHealthP2(pokestats.stats[0].base_stat);
+
+
 
 
 

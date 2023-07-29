@@ -8,6 +8,11 @@ using UnityEngine.Networking;
 
 public class PokeStatusTeam1 : MonoBehaviour
 {
+
+    List<string> ground;
+
+
+
     public int randNumberP1;
 
     public TextMeshProUGUI text;
@@ -15,6 +20,9 @@ public class PokeStatusTeam1 : MonoBehaviour
     [Header("Move/Stat")]
     public List<Move> movesGlobalP1;
     public List<Stat> statsGlobalP1;
+
+    [Header("Health")]
+    [SerializeField] P1HealthBar p1Health;
 
     public class Ability
     {
@@ -464,6 +472,11 @@ public class PokeStatusTeam1 : MonoBehaviour
 
                     //stats
                     statsGlobalP1 = pokestats.stats;
+
+
+                    //health
+                    p1Health.SetMaxHealthP1(pokestats.stats[0].base_stat);
+
                     break;
             
             }
