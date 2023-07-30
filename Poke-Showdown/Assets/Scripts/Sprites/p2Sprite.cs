@@ -6,7 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class p2Sprite : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] public SpriteRenderer spriteRenderer;
     public Sprite sprite;
 
     [SerializeField] PokeStatusTeam2 pokeStatus;
@@ -15,6 +15,14 @@ public class p2Sprite : MonoBehaviour
     void Start()
     {
 
+        setUpSpriteP2();
+
+
+    }
+
+
+    public void setUpSpriteP2()
+    {
         randNum = pokeStatus.randNumberP2;
         string newRandNum = randNum.ToString();
         if (randNum < 10)
@@ -28,10 +36,8 @@ public class p2Sprite : MonoBehaviour
         //Debug.Log(randNum);
         AsyncOperationHandle<Sprite> spriteHandle = Addressables.LoadAssetAsync<Sprite>("Assets/PokemonSprites/NORMAL/FRONT/GIF/" + newRandNum + ".gif");
         spriteHandle.Completed += LoadSpritesWhenReady;
-
     }
-
-    void LoadSpritesWhenReady(AsyncOperationHandle<Sprite> handleToCheck)
+    private void LoadSpritesWhenReady(AsyncOperationHandle<Sprite> handleToCheck)
     {
         if (handleToCheck.Status == AsyncOperationStatus.Succeeded)
         {
