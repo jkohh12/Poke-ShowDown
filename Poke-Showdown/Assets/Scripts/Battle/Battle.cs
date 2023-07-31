@@ -22,8 +22,8 @@ public class Battle : MonoBehaviour
     [SerializeField] GameObject newP1;
     [SerializeField] GameObject newP2;
 
-    private int indexVar; //onClick Variable
-    private int newRand;
+    private int indexVarP1; //onClick Variable
+    private int indexVarP2; //onClick Variable
     private float actionCounterP1 = 0;
     private float actionCounterP2 = 0;
     private double damageResultP1;
@@ -42,11 +42,11 @@ public class Battle : MonoBehaviour
         //For testing
         
         
-        if(/*P1MovesSource.moveCounterP1 == 3 ||*/ P2MovesSource.moveCounterP2 == 3)
+        if(P1MovesSource.moveCounterP1 == 3 || P2MovesSource.moveCounterP2 == 3)
         {
             //For testing
-            indexVar = Random.Range(0, 3);
-            newRand = Random.Range(0, 3);
+/*            indexVar = Random.Range(0, 3);
+            newRand = Random.Range(0, 3);*/
             //
             //speed check here
 
@@ -54,11 +54,11 @@ public class Battle : MonoBehaviour
             //indexVar = randTest; //indexVar should be set to index of move chosen in browser
 
             //P1
-            // damageResultP1 = chooseMove(indexVar);  //damage being done to player2 by player1
+            damageResultP1 = chooseMove(indexVarP1);  //damage being done to player2 by player1
 
             //P2
             //Debug.Log("TEST");
-            damageResultP2 = enemyChooseMove(newRand);
+            damageResultP2 = enemyChooseMove(indexVarP2);
             
 
                 
