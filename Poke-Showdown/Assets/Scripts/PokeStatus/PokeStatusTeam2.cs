@@ -10,14 +10,14 @@ public class PokeStatusTeam2 : MonoBehaviour
 {
     public int randNumberP2;
 
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI textP2;
 
     [Header("Move/Stat")]
     public List<Move> movesGlobalP2;
     public List<Stat> statsGlobalP2;
 
     [Header("Health")]
-    [SerializeField] P2HealthBar p2Health;
+    [SerializeField] public P2HealthBar p2Health;
     public class Ability
     {
         public Ability ability { get; set; }
@@ -430,12 +430,18 @@ public class PokeStatusTeam2 : MonoBehaviour
     }
     private void Awake()
     {
-        randNumberP2 = Random.Range(1, 650);                                                                                                   
-       // Debug.Log(randNumberP2);
-        StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberP2.ToString()));
+        setUpPokemonP2();
 
     }
 
+
+    public void setUpPokemonP2()
+    {
+        randNumberP2 = Random.Range(1, 650);
+        // Debug.Log(randNumberP2);
+        StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberP2.ToString()));
+
+    }
     IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
@@ -457,7 +463,7 @@ public class PokeStatusTeam2 : MonoBehaviour
                     // name/id
                     string initName = name.name;
                     string Capitalized = char.ToUpper(initName[0]) + initName.Substring(1);
-                    text.text = Capitalized;
+                    textP2.text = Capitalized;
 
                     // moves
                     movesGlobalP2 = pokestats.moves;
@@ -474,16 +480,18 @@ public class PokeStatusTeam2 : MonoBehaviour
 
 
 
+
                     //for debugging
-/*                    for(int i = 0; i < stats.Count; i++)
+/*                    Debug.Log(pokestats.name);
+                    for (int i = 0; i < pokestats.stats.Count; i++)
                     {
-                        Debug.Log(stats[i].base_stat);
-                        Debug.Log(stats[i].stat.name);
+                        Debug.Log(pokestats.stats[i].base_stat); 
+                        Debug.Log(pokestats.stats[i].stat.name);
                     }*/
-/*                    for(int i = 0; i < movesGlobal.Count; i++)
-                    {
-                        Debug.Log(movesGlobal[i].move.name);
-                    }*/
+                    /*                    for (int i = 0; i < movesGlobalP2.Count; i++)
+                                        {
+                                            Debug.Log(movesGlobalP2[i].move.name);
+                                        }*/
                     //Debug.Log(tester);
 
 

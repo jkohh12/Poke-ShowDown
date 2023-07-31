@@ -11,14 +11,14 @@ public class PokeStatusTeam1 : MonoBehaviour
 
     public int randNumberP1;
 
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI textP1;
 
     [Header("Move/Stat")]
     public List<Move> movesGlobalP1;
     public List<Stat> statsGlobalP1;
 
     [Header("Health")]
-    [SerializeField] P1HealthBar p1Health;
+    [SerializeField] public P1HealthBar p1Health;
 
     public class Ability
     {
@@ -432,12 +432,17 @@ public class PokeStatusTeam1 : MonoBehaviour
     }
     private void Awake()
     {
-        randNumberP1 = Random.Range(1, 650);                                                                                                   
-       // Debug.Log(randNumberP1);
-        StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberP1.ToString()));
+        setUpPokemonP2();
+
 
     }
 
+    public void setUpPokemonP2()
+    {
+        randNumberP1 = Random.Range(1, 650);
+        // Debug.Log(randNumberP1);
+        StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberP1.ToString()));
+    }
     IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
@@ -459,7 +464,7 @@ public class PokeStatusTeam1 : MonoBehaviour
                     // name/id
                     string initName = name.name;
                     string Capitalized = char.ToUpper(initName[0]) + initName.Substring(1);
-                    text.text = Capitalized;
+                    textP1.text = Capitalized;
 
                     // moves
                     movesGlobalP1 = pokestats.moves;

@@ -10,11 +10,11 @@ public class P2Moves : MonoBehaviour
     [SerializeField] PokeStatusTeam2 pokemon;
 
     public List<moveStats> movePoolAttackP2 = new List<moveStats>();
-    public List<moveStats> moveSetP2 = new List<moveStats>();
+    public List<moveStats> moveSetP2;
 
     private int randomNum;
 
-    public int moveCounterP2 = 0;    
+    public int moveCounterP2 = 0;
 
     public bool poolFullP2;
 
@@ -190,16 +190,21 @@ public class P2Moves : MonoBehaviour
 
     private void Start()
     {
-    
+      
+        setUpMoveP2();
 
+    }
+
+    public void setUpMoveP2()
+    {
+        moveCounterP2 = 0;
+        moveSetP2 = new List<moveStats>();
+        movePoolAttackP2 = new List<moveStats>();
         for (int i = 0; i < pokemon.movesGlobalP2.Count; i++)
         {
             StartCoroutine(GetRequest("https://pokeapi.co/api/v2/move/" + pokemon.movesGlobalP2[i].move.name));
 
         }
-
-
-       
 
     }
 
@@ -211,12 +216,13 @@ public class P2Moves : MonoBehaviour
         }
 
     }*/
-    IEnumerator GetRequest(string uri)
+    private IEnumerator GetRequest(string uri)
     {
+
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
             yield return webRequest.SendWebRequest();
-
+            
             switch (webRequest.result)
             {
                 case UnityWebRequest.Result.ConnectionError: //connection error or dataprocessing error, log an error in console
@@ -242,17 +248,21 @@ public class P2Moves : MonoBehaviour
                     break;
 
             }
+            
+           
+            
         }
     }
 
     // Update is called once per frame
     private void Update()
-    { 
+    {
+
         if (poolFullP2 && moveCounterP2 <= 3)
         {
             randomNum = Random.Range(0, movePoolAttackP2.Count - 1); //number in between 0 and end of movePoolAttack list
             moveSetP2.Add(movePoolAttackP2[randomNum]);
-           // Debug.Log("Player 2" + moveSetP2[moveCounter].name);
+           // Debug.Log("Player 2" + moveSetP2[moveCounterP2].name);
             moveCounterP2++;
         }
 

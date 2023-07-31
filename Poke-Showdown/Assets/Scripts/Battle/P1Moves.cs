@@ -211,7 +211,7 @@ public class P1Moves : MonoBehaviour
             }
 
         }*/
-    IEnumerator GetRequest(string uri)
+    private IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
