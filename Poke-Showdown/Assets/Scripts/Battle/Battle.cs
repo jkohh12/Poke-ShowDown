@@ -42,11 +42,11 @@ public class Battle : MonoBehaviour
         //For testing
 
 
-        if (P1MovesSource.moveCounterP1 == 3)
+/*        if (P1MovesSource.moveCounterP1 == 3)
         {
             //For testing
-/*            indexVar = Random.Range(0, 3);
-            newRand = Random.Range(0, 3);*/
+*//*            indexVar = Random.Range(0, 3);
+            newRand = Random.Range(0, 3);*//*
             //
             //speed check here
 
@@ -62,7 +62,7 @@ public class Battle : MonoBehaviour
 
 
 
-        }
+        }*/
 
         /*        if(actionCounterP2 < (float)damageResultP2)
                 {
