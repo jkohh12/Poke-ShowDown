@@ -67,14 +67,14 @@ public class Battle : MonoBehaviour
         if(actionCounterP2 < (float)damageResultP2)
         {
             Debug.Log(damageResultP2);
-            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.1f);
-            actionCounterP2 += 0.1f;
+            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.4f);
+            actionCounterP2 += 0.4f;
         }
         if(actionCounterP1 < (float)damageResultP1)
         {
          //   Debug.Log(damageResultP1);
-            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.1f);
-            actionCounterP1+=0.1f;
+            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.4f);
+            actionCounterP1+=0.4f;
         }
 
         if (P2HealthBarSource.sliderP2.value == 0)
