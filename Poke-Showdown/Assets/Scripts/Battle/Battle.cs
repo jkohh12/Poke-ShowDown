@@ -35,7 +35,7 @@ public class Battle : MonoBehaviour
 
     
 
-    private void Update()
+    void Update()
     {
 
 
@@ -96,7 +96,7 @@ public class Battle : MonoBehaviour
 
 
 
-    private double enemyChooseMove(int input) //make it wait for moves to generate
+    public double enemyChooseMove(int input) //make it wait for moves to generate
     {
         int? enemyPower = P2MovesSource.moveSetP2[input].power;
         float targetHealth = P1.statsGlobalP1[0].base_stat;
@@ -115,7 +115,7 @@ public class Battle : MonoBehaviour
 
         return damageCalc;
     }
-    private double chooseMove(int input)
+    public double chooseMove(int input)
     {
         int? playerPower = P1MovesSource.moveSetP1[input].power;
         float targetHealth = P2.statsGlobalP2[0].base_stat;
