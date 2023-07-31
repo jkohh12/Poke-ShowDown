@@ -32,7 +32,7 @@ public class p1Sprite : MonoBehaviour
 
     }
 
-    void LoadSpritesWhenReady (AsyncOperationHandle<Sprite> handleToCheck)
+    void LoadSpritesWhenReady (AsyncOperationHandle<Sprite> handleToCheck)  
     {
         if (handleToCheck.Status == AsyncOperationStatus.Succeeded)
         {
