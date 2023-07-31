@@ -22,7 +22,7 @@ public class Battle : MonoBehaviour
     [SerializeField] GameObject newP1;
     [SerializeField] GameObject newP2;
 
-    private int indexVarP1; //onClick Variable
+    private int indexVarP1 = 0;//onClick Variable
     private int indexVarP2; //onClick Variable
     private float actionCounterP1 = 0;
     private float actionCounterP2 = 0;
@@ -40,13 +40,13 @@ public class Battle : MonoBehaviour
 
 
         //For testing
-        
- /*       
-        if(P1MovesSource.moveCounterP1 == 3 || P2MovesSource.moveCounterP2 == 3)
+
+
+        if (P1MovesSource.moveCounterP1 == 3)
         {
             //For testing
-*//*            indexVar = Random.Range(0, 3);
-            newRand = Random.Range(0, 3);*//*
+/*            indexVar = Random.Range(0, 3);
+            newRand = Random.Range(0, 3);*/
             //
             //speed check here
 
@@ -54,36 +54,36 @@ public class Battle : MonoBehaviour
             //indexVar = randTest; //indexVar should be set to index of move chosen in browser
 
             //P1
-            damageResultP1 = chooseMove(indexVarP1);  //damage being done to player2 by player1
+            chooseMove(indexVarP1);  //damage being done to player2 by player1
 
             //P2
             //Debug.Log("TEST");
-            damageResultP2 = enemyChooseMove(indexVarP2);
-            
+            //enemyChooseMove(indexVarP2);
 
-                
-        }*/
 
-        if(actionCounterP2 < (float)damageResultP2)
-        {
-            Debug.Log(damageResultP2);
-            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.4f);
-            actionCounterP2 += 0.4f;
-        }
-        if(actionCounterP1 < (float)damageResultP1)
-        {
-         //   Debug.Log(damageResultP1);
-            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.4f);
-            actionCounterP1+=0.4f;
-        }
-
-        if (P2HealthBarSource.sliderP2.value == 0)
-        {
-            P2HealthBarSource.sliderP2.value = -1;
-            p2sprite.spriteRenderer.sprite = null;
-            P2.textP2.text = "";
 
         }
+
+        /*        if(actionCounterP2 < (float)damageResultP2)
+                {
+                    Debug.Log(damageResultP2);
+                    P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.4f);
+                    actionCounterP2 += 0.4f;
+                }
+                if(actionCounterP1 < (float)damageResultP1)
+                {
+                 //   Debug.Log(damageResultP1);
+                    P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.4f);
+                    actionCounterP1+=0.4f;
+                }*/
+
+        /*        if (P2HealthBarSource.sliderP2.value == 0)
+                {
+                    P2HealthBarSource.sliderP2.value = -1;
+                    p2sprite.spriteRenderer.sprite = null;
+                    P2.textP2.text = "";
+
+                }*/
 
         //
 
@@ -96,7 +96,7 @@ public class Battle : MonoBehaviour
 
 
 
-    public double enemyChooseMove(int input) //make it wait for moves to generate
+    public void enemyChooseMove(int input) //make it wait for moves to generate
     {
         int? enemyPower = P2MovesSource.moveSetP2[input].power;
         float targetHealth = P1.statsGlobalP1[0].base_stat;
@@ -113,9 +113,9 @@ public class Battle : MonoBehaviour
         }
 
 
-        return damageCalc;
+        dealDamageP1(damageCalc);
     }
-    public double chooseMove(int input)
+    public void chooseMove(int input)
     {
         int? playerPower = P1MovesSource.moveSetP1[input].power;
         float targetHealth = P2.statsGlobalP2[0].base_stat;
@@ -131,33 +131,38 @@ public class Battle : MonoBehaviour
 
         double damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10)/50) /* * STAB  * TYPE1 * TYPE2 (type effectiveness)add it later */ * calcRandom)/100;
 
-        if(damageCalc <= 2)
+        if (damageCalc <= 2)
         {
             damageCalc = 2;
         }
 
-  /*      while (targetHealth > 0)
-        {
 
-        }*/
-        return damageCalc;
-       
-
-
-
-
-
-
-
-
+        dealDamageP2(damageCalc); ///deal damage to P2
 
     }
 
-    /*    private void moveAction(string name, int? power)
+    public void dealDamageP2(double damage)
+    {
+        while (actionCounterP1 < damage)
         {
+            Debug.Log(damage);
+            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.4f);
+            actionCounterP1 += 0.4f;
+        }
 
-        }*/
+        actionCounterP1 = 0;
+    }
 
-    // Update is called once per frame
+    public void dealDamageP1(double damage)
+    {
+        while(actionCounterP2 < damage)
+        {
+            //Debug.Log(damage);
+            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.4f);
+            actionCounterP2 += 0.4f;
+        }
+        actionCounterP2 = 0;
+    }
+
 
 }
