@@ -13,9 +13,10 @@
   </head>
   <style>
     .flex {
+      width: 1100px;
+      height: 100px;
       display: flex;
-      justify-content: center;
-      margin: 30px;
+      justify-content: space-evenly;
     }
 
     button{
@@ -31,25 +32,30 @@
 
     .cont{
       position: absolute;
-      top: 800px;
-      left: 650px;
+      top: 700px;
+      left: 400px;
     }
 
     h1{
-      margin-top: 80px;
       text-align: center;
       color: white;
+      background: rgb(144,13,9);
+      height: auto;
+      width: auto;
     }
 
-    body{
-      background-color: rgb(41,41,41);
+    .back{
+      width: 1920px;
+      height: 1080px;
+      background-image: url("https://media.discordapp.net/attachments/763614696229044234/1135723766429786264/1644597.jpg?width=1920&height=1080");
     }
 
   </style>
   
   
   <body>
-    <h1>POKERMAN SHOWDOWN</h1>
+    <div class="back">
+      <h1>POKERMAN SHOWDOWN</h1>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -62,22 +68,14 @@
     </div>
     <div class="cont">
       <div class="flex">
-        <div class="marg">
           <button class='nes-btn button is-primary' id="move1">Move 1</button>
-        </div>
-        <div class="marg">
           <button class='nes-btn button is-primary' id="move2">Move 2</button>
-        </div>
-      </div>
-      <div class="flex">
-        <div class="marg">
           <button class='nes-btn button is-primary' id="move3">Move 3</button>
-        </div>
-        <div class="marg">
           <button class='nes-btn button is-primary' id="move4">Move 4</button>
-        </div>
       </div>
     </div>
+    </div>
+    
   
   </body>
   <script>
