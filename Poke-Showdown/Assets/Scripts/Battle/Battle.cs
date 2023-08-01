@@ -22,12 +22,12 @@ public class Battle : MonoBehaviour
     [SerializeField] GameObject newP1;
     [SerializeField] GameObject newP2;
 
-    private int indexVarP1 = 0;//onClick Variable
+    private int indexVarP1;//onClick Variable
     private int indexVarP2; //onClick Variable
     private float actionCounterP1 = 0;
     private float actionCounterP2 = 0;
-    private double damageResultP1;
-    private double damageResultP2;
+    public double damageResultP1;
+    public double damageResultP2;
     private float p2healthbarVal;
 
     //onClick(player clicks)
@@ -42,40 +42,51 @@ public class Battle : MonoBehaviour
         //For testing
 
 
-        /*        if (P1MovesSource.moveCounterP1 == 3)
-                {
-                    //For testing
-        *//*            indexVar = Random.Range(0, 3);
-                    newRand = Random.Range(0, 3);*//*
-                    //
-                    //speed check here
+ /*       if (P1MovesSource.moveCounterP1 == 3)
+        {
+            //For testing
+    *//*        indexVar = Random.Range(0, 3);
+            newRand = Random.Range(0, 3);*//*
+            //
+            //speed check here
 
-                    //choosing move done in browser
-                    //indexVar = randTest; //indexVar should be set to index of move chosen in browser
+            //choosing move done in browser
+            //indexVar = randTest; //indexVar should be set to index of move chosen in browser
 
-                    //P1
-                    chooseMove(indexVarP1);  //damage being done to player2 by player1
+            //P1
+            damageResultP1 = chooseMove(indexVarP1);  //damage being done to player2 by player1
 
-                    //P2
-                    //Debug.Log("TEST");
-                    //enemyChooseMove(indexVarP2);
+            //P2
+            //Debug.Log("TEST");
+            //enemyChooseMove(indexVarP2);
+        
 
 
+        }*/
 
-                }*/
+/*        if (actionCounterP2 < (float)damageResultP2)
+        {
+            Debug.Log(damageResultP2);
+            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.4f);
+            actionCounterP2 += 0.4f;
+        }*/
 
-        /*        if(actionCounterP2 < (float)damageResultP2)
-                {
-                    Debug.Log(damageResultP2);
-                    P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.4f);
-                    actionCounterP2 += 0.4f;
-                }
-                if(actionCounterP1 < (float)damageResultP1)
-                {
-                 //   Debug.Log(damageResultP1);
-                    P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.4f);
-                    actionCounterP1+=0.4f;
-                }*/
+/*        if(Input.GetButtonDown("Jump"))
+        {
+            chooseMove(0);
+        }*/
+
+        if (actionCounterP1 < (float)damageResultP1)
+        {
+            //   Debug.Log(damageResultP1);
+            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.4f);
+            actionCounterP1 += 0.4f;
+            if(actionCounterP1 >= (float)damageResultP1)
+            {
+                actionCounterP1 = 0;
+                damageResultP1 = 0;
+            }
+        }
 
         if (P2HealthBarSource.sliderP2.value == 0)
         {
@@ -112,8 +123,10 @@ public class Battle : MonoBehaviour
             damageCalc = 2;
         }
 
+        damageResultP2 = damageCalc;
 
-        dealDamageP1(damageCalc);
+
+//        return damageCalc;
     }
     public void chooseMove(int input)
     {
@@ -136,33 +149,14 @@ public class Battle : MonoBehaviour
             damageCalc = 2;
         }
 
+        damageResultP1 = damageCalc;
 
-        dealDamageP2(damageCalc); ///deal damage to P2
+
+  //      return damageCalc;
 
     }
 
-    public void dealDamageP2(double damage)
-    {
-        while (actionCounterP1 < damage)
-        {
-            Debug.Log(damage);
-            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.4f);
-            actionCounterP1 += 0.4f;
-        }
 
-        actionCounterP1 = 0;
-    }
-
-    public void dealDamageP1(double damage)
-    {
-        while(actionCounterP2 < damage)
-        {
-            //Debug.Log(damage);
-            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.4f);
-            actionCounterP2 += 0.4f;
-        }
-        actionCounterP2 = 0;
-    }
 
 
 }
