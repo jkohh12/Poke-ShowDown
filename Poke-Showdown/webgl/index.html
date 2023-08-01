@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    
   </head>
   <style>
     .flex {
@@ -61,24 +63,26 @@
     <div class="cont">
       <div class="flex">
         <div class="marg">
-          <button class='nes-btn button is-primary'>Move 1</button>
+          <button class='nes-btn button is-primary' onclick="instance.SendMessage('Battle', 'chooseMove', 0)" >Move 1</button>
         </div>
         <div class="marg">
-          <button class='nes-btn button is-primary'>Move 2</button>
+          <button class='nes-btn button is-primary' onclick="instance.SendMessage('Battle', 'chooseMove', 1)" >Move 2</button>
         </div>
       </div>
       <div class="flex">
         <div class="marg">
-          <button class='nes-btn button is-primary'>Move 3</button>
+          <button class='nes-btn button is-primary' onclick="instance.SendMessage('Battle', 'chooseMove', 2)" >Move 3</button>
         </div>
         <div class="marg">
-          <button class='nes-btn button is-primary'>Move 4</button>
+          <button class='nes-btn button is-primary' onclick="instance.SendMessage('Battle', 'chooseMove', 3)" >Move 4</button>
         </div>
       </div>
     </div>
     
-    <script>
-
+    
+  </body>
+  <script>
+      
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
@@ -156,6 +160,7 @@
 
       var script = document.createElement("script");
       script.src = loaderUrl;
+      let instance = null;
       script.onload = () => {
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
@@ -163,6 +168,7 @@
                 loadingBar.style.display = "none";
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
+                  instance = unityInstance;
                 };
               }).catch((message) => {
                 alert(message);
@@ -170,7 +176,5 @@
             };
 
       document.body.appendChild(script);
-
     </script>
-  </body>
 </html>
