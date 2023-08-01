@@ -42,27 +42,27 @@ public class Battle : MonoBehaviour
         //For testing
 
 
-/*        if (P1MovesSource.moveCounterP1 == 3)
-        {
-            //For testing
-*//*            indexVar = Random.Range(0, 3);
-            newRand = Random.Range(0, 3);*//*
-            //
-            //speed check here
+        /*        if (P1MovesSource.moveCounterP1 == 3)
+                {
+                    //For testing
+        *//*            indexVar = Random.Range(0, 3);
+                    newRand = Random.Range(0, 3);*//*
+                    //
+                    //speed check here
 
-            //choosing move done in browser
-            //indexVar = randTest; //indexVar should be set to index of move chosen in browser
+                    //choosing move done in browser
+                    //indexVar = randTest; //indexVar should be set to index of move chosen in browser
 
-            //P1
-            chooseMove(indexVarP1);  //damage being done to player2 by player1
+                    //P1
+                    chooseMove(indexVarP1);  //damage being done to player2 by player1
 
-            //P2
-            //Debug.Log("TEST");
-            //enemyChooseMove(indexVarP2);
+                    //P2
+                    //Debug.Log("TEST");
+                    //enemyChooseMove(indexVarP2);
 
 
 
-        }*/
+                }*/
 
         /*        if(actionCounterP2 < (float)damageResultP2)
                 {
@@ -77,13 +77,13 @@ public class Battle : MonoBehaviour
                     actionCounterP1+=0.4f;
                 }*/
 
-        /*        if (P2HealthBarSource.sliderP2.value == 0)
-                {
-                    P2HealthBarSource.sliderP2.value = -1;
-                    p2sprite.spriteRenderer.sprite = null;
-                    P2.textP2.text = "";
+        if (P2HealthBarSource.sliderP2.value == 0)
+        {
+            P2HealthBarSource.sliderP2.value = -1;
+            p2sprite.spriteRenderer.sprite = null;
+            P2.textP2.text = "";
 
-                }*/
+        }
 
         //
 
