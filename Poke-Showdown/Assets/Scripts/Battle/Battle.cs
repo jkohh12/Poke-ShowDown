@@ -44,6 +44,7 @@ public class Battle : MonoBehaviour
 
     private void Start()
     {
+
         // string nameP1Cap = char.ToUpper(P1.name[0]) + P1.name.Substring(1);
         p1Name = P1.textP1.text;
         p2Name = P2.textP2.text;
@@ -55,8 +56,6 @@ public class Battle : MonoBehaviour
 
     void Update()
     {
-
-
 
         //Testing
         if (Input.GetButtonDown("Jump"))
@@ -97,14 +96,9 @@ public class Battle : MonoBehaviour
 
         if (P2HealthBarSource.sliderP2.value == 0 && p2Alive)
         {
-          //  string P2name = P2.textP2.text;
-            
-           // P2HealthBarSource.sliderP2.value = -1;
-            dialogueText.text = "";
-            dialogueText.text = "The foe's " + p2Name + " fainted!";
-            P2.textP2.text = "";
-            p2sprite.gameObject.SetActive(false);
-            p2Alive = false;
+            //  string P2name = P2.textP2.text;
+            // P2HealthBarSource.sliderP2.value = -1;
+            StartCoroutine(p2Faint());
  
         }
 
@@ -116,12 +110,8 @@ public class Battle : MonoBehaviour
         if(P1HealthBarSource.sliderP1.value == 0 && p1Alive)
         {
             //string P1name = P1.textP1.text;
-          //  P1HealthBarSource.sliderP1.value = -1;
-            dialogueText.text = "";
-            dialogueText.text = p1Name + " fainted!";
-            P1.textP1.text = "";
-            p1sprite.gameObject.SetActive(false);
-            p1Alive = false;                                                                                                                                    
+            //  P1HealthBarSource.sliderP1.value = -1;
+            StartCoroutine(p1Faint());
 
         }
 
@@ -129,13 +119,28 @@ public class Battle : MonoBehaviour
         {
             StartCoroutine(lossText());
         }
-
         //
 
+    }
 
+    IEnumerator p2Faint()
+    {
+        yield return new WaitForSeconds(1f);
+        dialogueText.text = "";
+        dialogueText.text = "The foe's " + p2Name + " fainted!";
+        P2.textP2.text = "";
+        p2sprite.gameObject.SetActive(false);
+        p2Alive = false;
+    }
 
-
-
+    IEnumerator p1Faint()
+    {
+        yield return new WaitForSeconds(1f);
+        dialogueText.text = "";
+        dialogueText.text = p1Name + " fainted!";
+        P1.textP1.text = "";
+        p1sprite.gameObject.SetActive(false);
+        p1Alive = false;
     }
 
     IEnumerator lossText()
@@ -144,7 +149,6 @@ public class Battle : MonoBehaviour
         dialogueText.text = "";
         setLossText();
         //
-
     }
 
     IEnumerator victoryText()
