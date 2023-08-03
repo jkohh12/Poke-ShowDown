@@ -15,6 +15,7 @@ public class PokeStatusTeam2 : MonoBehaviour
     [Header("Move/Stat")]
     public List<Move> movesGlobalP2;
     public List<Stat> statsGlobalP2;
+    public List<Type> typeGlobalP2;
 
     [Header("Health")]
     [SerializeField] public P2HealthBar p2Health;
@@ -476,7 +477,8 @@ public class PokeStatusTeam2 : MonoBehaviour
                     //health
                     p2Health.SetMaxHealthP2(pokestats.stats[0].base_stat);
 
-
+                    //type
+                    typeGlobalP2 = pokestats.types;
 
 
 

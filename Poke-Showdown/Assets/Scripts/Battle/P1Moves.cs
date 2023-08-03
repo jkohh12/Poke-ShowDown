@@ -254,7 +254,8 @@ public class P1Moves : MonoBehaviour
         {
             randomNum = Random.Range(0, movePoolAttackP1.Count - 1); //number in between 0 and end of movePoolAttack list
             moveSetP1.Add(movePoolAttackP1[randomNum]);
-            //Debug.Log("Player 1" + moveSetP1[moveCounter].name);
+/*            Debug.Log("Player 1" + moveSetP1[moveCounterP1].name);
+            Debug.Log("Player 1 Move" + moveSetP1[moveCounterP1].type.name);*/
             moveCounterP1++;
         }
 

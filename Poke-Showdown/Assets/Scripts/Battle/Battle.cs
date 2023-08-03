@@ -19,6 +19,9 @@ public class Battle : MonoBehaviour
     [SerializeField] p1Sprite p1sprite;
     [SerializeField] p2Sprite p2sprite;
 
+
+    [SerializeField] private TypeEffectiveness typeEffectiveness;
+
 /*    [SerializeField] GameObject newP1;
     [SerializeField] GameObject newP2;*/
 
@@ -40,6 +43,13 @@ public class Battle : MonoBehaviour
 
     private bool p1Alive = true;
     private bool p2Alive = true;
+
+    private bool hasTwoTypes = false;
+    private int typeCounter = 0;
+
+
+
+
     //onClick(player clicks)
 
     private void Start()
@@ -48,9 +58,13 @@ public class Battle : MonoBehaviour
         // string nameP1Cap = char.ToUpper(P1.name[0]) + P1.name.Substring(1);
         p1Name = P1.textP1.text;
         p2Name = P2.textP2.text;
-/*        Debug.Log(p1Name);
-        Debug.Log(p2Name);*/
+        /*        Debug.Log(p1Name);
+                Debug.Log(p2Name);*/
         dialogueText.text = "What will " + P1.textP1.text + " do?";
+
+
+
+
     }
 
 
@@ -96,10 +110,10 @@ public class Battle : MonoBehaviour
 
         if (P2HealthBarSource.sliderP2.value == 0 && p2Alive)
         {
-            //  string P2name = P2.textP2.text;
+
             // P2HealthBarSource.sliderP2.value = -1;
             StartCoroutine(p2Faint());
- 
+
         }
 
         if (!p2Alive)
@@ -109,8 +123,7 @@ public class Battle : MonoBehaviour
 
         if(P1HealthBarSource.sliderP1.value == 0 && p1Alive)
         {
-            //string P1name = P1.textP1.text;
-            //  P1HealthBarSource.sliderP1.value = -1;
+
             StartCoroutine(p1Faint());
 
         }
@@ -123,15 +136,7 @@ public class Battle : MonoBehaviour
 
     }
 
-    IEnumerator p2Faint()
-    {
-        yield return new WaitForSeconds(1f);
-        dialogueText.text = "";
-        dialogueText.text = "The foe's " + p2Name + " fainted!";
-        P2.textP2.text = "";
-        p2sprite.gameObject.SetActive(false);
-        p2Alive = false;
-    }
+
 
     IEnumerator p1Faint()
     {
@@ -141,6 +146,19 @@ public class Battle : MonoBehaviour
         P1.textP1.text = "";
         p1sprite.gameObject.SetActive(false);
         p1Alive = false;
+    }
+
+
+    IEnumerator p2Faint()
+    {
+
+        yield return new WaitForSeconds(1f);
+      
+        dialogueText.text = "";
+        dialogueText.text = "The foe's " + p2Name + " fainted!";
+        P2.textP2.text = "";
+        p2sprite.gameObject.SetActive(false);
+        p2Alive = false;
     }
 
     IEnumerator lossText()
@@ -236,7 +254,47 @@ public class Battle : MonoBehaviour
 
             int calcRandom = Random.Range(80, 100);
 
+
+            //STAB CALC
+
+
+            //TYPE CALC
+
+
             double damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10) / 50) /* * STAB  * TYPE1 * TYPE2 (type effectiveness)add it later */ * calcRandom) / 100;
+
+        
+
+
+            if (typeEffectiveness.superEffective.ContainsKey(P1MovesSource.moveSetP1[input].type.name) )
+            {
+              //  Debug.Log(typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][0]);
+                for (int i = 0; i < typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name].Length - 1; i++) 
+                {
+                    if(P2.typeGlobalP2[0].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]
+                     && P2.typeGlobalP2[1].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]) //fix index fuck this shit
+                    {
+                        damageCalc = damageCalc * 4;
+                        Debug.Log("even more effective");
+                    }
+                    else if (P2.typeGlobalP2[0].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]
+                     || P2.typeGlobalP2[1].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]) //need to account for pokemon only having one type
+                    {
+                        damageCalc = damageCalc * 2;
+                        Debug.Log("SUPER EFFECTIVE");
+                    }
+                }
+
+            }
+/*            else if()
+            {
+
+            }
+            else
+            {
+
+            }*/
+
 
             if (damageCalc <= 2)
             {

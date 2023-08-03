@@ -262,7 +262,7 @@ public class P2Moves : MonoBehaviour
         {
             randomNum = Random.Range(0, movePoolAttackP2.Count - 1); //number in between 0 and end of movePoolAttack list
             moveSetP2.Add(movePoolAttackP2[randomNum]);
-           // Debug.Log("Player 2" + moveSetP2[moveCounterP2].name);
+            //Debug.Log("Player 2" + moveSetP2[moveCounterP2].name);
             moveCounterP2++;
         }
 
