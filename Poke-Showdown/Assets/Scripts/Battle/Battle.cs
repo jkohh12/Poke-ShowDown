@@ -263,8 +263,6 @@ public class Battle : MonoBehaviour
 
             double damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10) / 50) /* * STAB  * TYPE1 * TYPE2 (type effectiveness)add it later */ * calcRandom) / 100;
 
-        
-
 
             if (typeEffectiveness.superEffective.ContainsKey(P1MovesSource.moveSetP1[input].type.name) )
             {
@@ -285,6 +283,10 @@ public class Battle : MonoBehaviour
                     }
                 }
 
+            }
+            else
+            {
+                damageCalc = damageCalc * 1;
             }
 /*            else if()
             {

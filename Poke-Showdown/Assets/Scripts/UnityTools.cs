@@ -30,7 +30,7 @@ public class AutoSpriteSlicer
 		importer.spriteImportMode = SpriteImportMode.Multiple;
 		importer.mipmapEnabled = false;
 		importer.filterMode = FilterMode.Point;
-		importer.spritePivot = Vector2.down;
+		/*importer.spritePivot = 0;*/
 		importer.textureCompression = TextureImporterCompression.Uncompressed;
 
 		var textureSettings = new TextureImporterSettings(); // need this stupid class because spriteExtrude and spriteMeshType aren't exposed on TextureImporter
@@ -54,7 +54,7 @@ public class AutoSpriteSlicer
 		foreach (Rect rect in rectsList)
 		{
 			var meta = new SpriteMetaData();
-			meta.pivot = Vector2.down;
+	/*		meta.pivot = Vector2.down;*/
 			meta.alignment = (int)SpriteAlignment.Center;
 			meta.rect = rect;
 			meta.name = filenameNoExtension + "_" + rectNum++;
