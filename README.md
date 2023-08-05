@@ -11,8 +11,8 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 
 ## Features (WIP)
 
-* Random Pokemon Generation
-* Random Moveset Generation
+* Random Pokemon Generation (PokeAPI)
+* Random Moveset Generation (PokeAPI)
 * Name Generation based off of Pokemon
 * Fully Functioning Health Bar (Changes Gradient Depending on Health Value)
 * Fully Animated Sprites for each Pokemon (WIP)
