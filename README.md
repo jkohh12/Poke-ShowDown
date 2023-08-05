@@ -24,7 +24,7 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 
 __Functionality in Unity Game Engine__
 
-https://github.com/jkohh12/Poke-ShowDown/assets/136869443/01590789-dc45-49de-b982-eef36448e122
+https://github.com/jkohh12/Poke-ShowDown/assets/136869443/9322dd5d-9b36-4766-bd37-ff93c6ca5f74
 
 
 
