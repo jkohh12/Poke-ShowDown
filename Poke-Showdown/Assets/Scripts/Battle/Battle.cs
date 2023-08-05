@@ -232,9 +232,30 @@ public class Battle : MonoBehaviour
         else
         {
             p1Types.Add(P1.typeGlobalP1[0].type.name);
+
         }
 
         damageCalc = effectivenessCalc(damageCalc, input, P2MovesSource.moveSetP2[input].type.name, p1Types);
+
+        if(P2.typeGlobalP2.Count == 2)
+        {
+            if (P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[0].type.name || P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[1].type.name)
+            {
+                damageCalc = damageCalc * 1.5;
+                Debug.Log("2TYPE: STAB");
+            }
+        }
+        else
+        {
+            if(P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[0].type.name)
+            {
+                damageCalc = damageCalc * 1.5;
+                Debug.Log("1Type: STAB");
+            }
+        }
+        //STAB
+       
+
 
 /*        if (damageCalc <= 2)
         {
@@ -270,7 +291,7 @@ public class Battle : MonoBehaviour
             int calcRandom = Random.Range(80, 100);
 
 
-            //STAB CALC
+        
 
             
           
@@ -292,12 +313,31 @@ public class Battle : MonoBehaviour
             }
 
             damageCalc = effectivenessCalc(damageCalc, input, P1MovesSource.moveSetP1[input].type.name, p2Types);
-           
-/*
-            if (damageCalc <= 2)
+
+
+            if (P1.typeGlobalP1.Count == 2)
             {
-                damageCalc = 2;
-            }*/
+                if (P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[0].type.name || P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[1].type.name)
+                {
+                    damageCalc = damageCalc * 1.5;
+                    Debug.Log("2TYPE: STAB");
+                }
+            }
+            else
+            {
+                if (P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[0].type.name)
+                {
+                    damageCalc = damageCalc * 1.5;
+                    Debug.Log("1Type: STAB");
+                }
+            }
+            /*
+                        if (damageCalc <= 2)
+                        {
+                            damageCalc = 2;
+                        }*/
+
+            //STAB CALC
 
             damageResultP1 = damageCalc;
         }
