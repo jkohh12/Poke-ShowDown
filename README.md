@@ -18,10 +18,15 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 * Type Effectiveness and Damage calculations (SuperEffective, NotEffective, NoEffect) (WIP)
 * Functioning Dialogue Box, similar to dialogue box seen in Pokemon Series
 * Functionality in Browser, with Web Development.
+* Move Selection with buttons.
 
-* Functionality Shown in Unity Game Engine
+<details>
+<summary>Functionality in Unity Game Engine</summary>
 
-https://github.com/jkohh12/Poke-ShowDown/assets/136869443/07a36001-b5bf-4427-9261-e6c2a333accf
+https://github.com/jkohh12/Poke-ShowDown/assets/136869443/01590789-dc45-49de-b982-eef36448e122
+
+</details>
+
 
 
 
