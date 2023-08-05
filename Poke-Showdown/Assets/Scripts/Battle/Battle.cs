@@ -222,11 +222,25 @@ public class Battle : MonoBehaviour
 
         double damageCalc = ((((int)enemyPower * (enemyAttack / targetDefense) * 10) / 50) /* * STAB  * TYPE1 * TYPE2 (type effectiveness)add it later */ * calcRandom) / 100;
 
-        if(damageCalc <= 2)
+        List<string> p1Types = new List<string>();
+        if (P1.typeGlobalP1.Count == 2)
+        {
+            p1Types.Add(P1.typeGlobalP1[0].type.name);
+            p1Types.Add(P1.typeGlobalP1[1].type.name);
+
+        }
+        else
+        {
+            p1Types.Add(P1.typeGlobalP1[0].type.name);
+        }
+
+        damageCalc = effectivenessCalc(damageCalc, input, P2MovesSource.moveSetP2[input].type.name, p1Types);
+
+/*        if (damageCalc <= 2)
         {
             damageCalc = 2;
         }
-
+*/
         damageResultP2 = damageCalc;
         p1Turn = true;
 
@@ -258,57 +272,106 @@ public class Battle : MonoBehaviour
 
             //STAB CALC
 
+            
+          
 
-            //TYPE CALC
-
+            //normal effect, 2x super effective, 4x super effective, 0.5 not effective, 0.25 not effective, no effect
 
             double damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10) / 50) /* * STAB  * TYPE1 * TYPE2 (type effectiveness)add it later */ * calcRandom) / 100;
 
-            Debug.Log("P2 HAS THIS MANY TYPES" + P2.typeGlobalP2.Count);
-            if (typeEffectiveness.superEffective.ContainsKey(P1MovesSource.moveSetP1[input].type.name) )
+            List<string> p2Types = new List<string>();
+            if(P2.typeGlobalP2.Count == 2)
             {
-              //  Debug.Log(typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][0]);
-/*                for (int i = 0; i < typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name].Length; i++) 
-                {*/
-                    if(typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name].Contains(P2.typeGlobalP2[0].type.name) 
-                    && typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name].Contains(P2.typeGlobalP2[1].type.name))
-                    {
-                        damageCalc = damageCalc * 4;
-                        Debug.Log("even more effective");
-                    }
-/*                    else if (P2.typeGlobalP2[0].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]
-                     || P2.typeGlobalP2[1].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]) //need to account for pokemon only having one type
-                    {
-                        damageCalc = damageCalc * 2;
-                        Debug.Log("SUPER EFFECTIVE");
-                    }*/
-              //  }
+                p2Types.Add(P2.typeGlobalP2[0].type.name);
+                p2Types.Add(P2.typeGlobalP2[1].type.name);
 
             }
             else
             {
-                damageCalc = damageCalc * 1;
+                p2Types.Add(P2.typeGlobalP2[0].type.name);
             }
-/*            else if()
-            {
 
-            }
-            else
-            {
-
-            }*/
-
-
+            damageCalc = effectivenessCalc(damageCalc, input, P1MovesSource.moveSetP1[input].type.name, p2Types);
+           
+/*
             if (damageCalc <= 2)
             {
                 damageCalc = 2;
-            }
+            }*/
 
             damageResultP1 = damageCalc;
         }
 
   //      return damageCalc;
 
+    }
+    
+
+    private double effectivenessCalc(double damageCalc, int input, string dealingDamage, List<string> takingDamage)
+    {
+        //TYPE CALC
+        Debug.Log("THIS IS THE MOVE TYPE DEALING DAMAGE" + dealingDamage);
+
+        Debug.Log("Before Calcs: " + damageCalc);
+
+        Debug.Log("P HAS THIS MANY TYPES" + P2.typeGlobalP2.Count);
+
+
+        if (typeEffectiveness.superEffective[dealingDamage].Contains(takingDamage[0]))
+        {
+            damageCalc = damageCalc * 2;
+            Debug.Log("2x");
+        }
+        else if (typeEffectiveness.notEffective[dealingDamage].Contains(takingDamage[0]))
+        {
+            damageCalc = damageCalc * 0.5;
+            Debug.Log("0.5x");
+        }
+        else if (typeEffectiveness.noEffect[dealingDamage].Contains(takingDamage[0]))
+        {
+            damageCalc = 0;
+            Debug.Log("no Effect");
+        }
+
+        else
+        {
+            damageCalc = damageCalc * 1;
+            Debug.Log("nothing");
+
+        }
+
+        if (takingDamage.Count == 2)
+        {
+            if (typeEffectiveness.superEffective[dealingDamage].Contains(takingDamage[1]))
+            {
+                damageCalc = damageCalc * 2;
+                Debug.Log("2type: 4x");
+            }
+            else if (typeEffectiveness.notEffective[dealingDamage].Contains(takingDamage[1]))
+            {
+                damageCalc = damageCalc * 0.5;
+                Debug.Log("2type: 0.5x");
+            }
+            else if (typeEffectiveness.noEffect[dealingDamage].Contains(takingDamage[1]))
+            {
+                damageCalc = 0;
+                Debug.Log("2type: NoEffect");
+
+            }
+
+            else
+            {
+                damageCalc = damageCalc * 1;
+                Debug.Log("2type: nothing");
+
+            }
+        }
+
+
+        Debug.Log("After Calcs: " + damageCalc);
+        Debug.Log("END HERE");
+
+        return damageCalc;
     }
 
 
