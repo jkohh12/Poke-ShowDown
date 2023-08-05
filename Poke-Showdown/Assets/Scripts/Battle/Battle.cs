@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class Battle : MonoBehaviour
 {
@@ -263,25 +264,25 @@ public class Battle : MonoBehaviour
 
             double damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10) / 50) /* * STAB  * TYPE1 * TYPE2 (type effectiveness)add it later */ * calcRandom) / 100;
 
-
+            Debug.Log("P2 HAS THIS MANY TYPES" + P2.typeGlobalP2.Count);
             if (typeEffectiveness.superEffective.ContainsKey(P1MovesSource.moveSetP1[input].type.name) )
             {
               //  Debug.Log(typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][0]);
-                for (int i = 0; i < typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name].Length - 1; i++) 
-                {
-                    if(P2.typeGlobalP2[0].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]
-                     && P2.typeGlobalP2[1].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]) //fix index fuck this shit
+/*                for (int i = 0; i < typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name].Length; i++) 
+                {*/
+                    if(typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name].Contains(P2.typeGlobalP2[0].type.name) 
+                    && typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name].Contains(P2.typeGlobalP2[1].type.name))
                     {
                         damageCalc = damageCalc * 4;
                         Debug.Log("even more effective");
                     }
-                    else if (P2.typeGlobalP2[0].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]
+/*                    else if (P2.typeGlobalP2[0].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]
                      || P2.typeGlobalP2[1].type.name == typeEffectiveness.superEffective[P1MovesSource.moveSetP1[input].type.name][i]) //need to account for pokemon only having one type
                     {
                         damageCalc = damageCalc * 2;
                         Debug.Log("SUPER EFFECTIVE");
-                    }
-                }
+                    }*/
+              //  }
 
             }
             else
