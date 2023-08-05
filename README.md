@@ -5,7 +5,7 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 ## Assets used: 
 [__All Pokemon Sprites (Front/Back)__](https://github.com/Velorexe/PKUnityInessentials/tree/master)\
 [__Battle System Menu__](https://www.deviantart.com/pikachumazzinga/art/BLACK-2-AND-WHITE-2-UPPER-SCREEN-BATTLE-SYSTEM-RIP-381417457)\
-[__PokeAPI__](https://pokeapi.co/)
+[__PokeAPI__](https://pokeapi.co/)\
 [__Battle Music__](https://www.youtube.com/watch?v=_Yr5Taoyalo&t=5s)
 
 
