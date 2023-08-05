@@ -22,12 +22,9 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 * Battle Music
 * Move Selection with buttons.
 
-<details>
-<summary>Functionality in Unity Game Engine</summary>
+__Functionality in Unity Game Engine__
 
 https://github.com/jkohh12/Poke-ShowDown/assets/136869443/01590789-dc45-49de-b982-eef36448e122
-
-</details>
 
 
 
