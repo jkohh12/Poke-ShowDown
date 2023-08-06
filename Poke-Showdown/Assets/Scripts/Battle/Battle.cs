@@ -103,6 +103,8 @@ public class Battle : MonoBehaviour
             actionCounterP2 += 0.4f;
             if(actionCounterP2 >= (float)damageResultP2)
             {
+                dialogueText.text = "";
+                dialogueText.text = "What will " + P1.textP1.text + " do?";
                 actionCounterP2 = 0;
                 damageResultP2 = 0;
             }
