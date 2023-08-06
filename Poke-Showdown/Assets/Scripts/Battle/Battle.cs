@@ -23,6 +23,11 @@ public class Battle : MonoBehaviour
 
     [SerializeField] private TypeEffectiveness typeEffectiveness;
 
+
+    [SerializeField] private AudioSource[] effectivenessSound;
+
+    [SerializeField] private AudioSource[] mainBGM;
+
 /*    [SerializeField] GameObject newP1;
     [SerializeField] GameObject newP2;*/
 
@@ -45,6 +50,10 @@ public class Battle : MonoBehaviour
     private bool p1Alive = true;
     private bool p2Alive = true;
 
+    private bool superEffective = false;
+    private bool notEffective = false;
+    private bool normalEffect = false;
+
     private bool hasTwoTypes = false;
     private int typeCounter = 0;
 
@@ -55,7 +64,7 @@ public class Battle : MonoBehaviour
 
     private void Start()
     {
-
+        mainBGM[0].Play();
         // string nameP1Cap = char.ToUpper(P1.name[0]) + P1.name.Substring(1);
         p1Name = P1.textP1.text;
         p2Name = P2.textP2.text;
@@ -77,6 +86,23 @@ public class Battle : MonoBehaviour
         {
             chooseMove(0);
         }
+
+        if (superEffective)
+        {
+            effectivenessSound[1].Play();
+            superEffective = false;
+        }
+        else if (notEffective)
+        {
+            effectivenessSound[2].Play();
+            notEffective = false;
+        }
+        else if (normalEffect)
+        {
+            effectivenessSound[0].Play();
+            normalEffect = false;
+        }
+
 
         if (actionCounterP1 < (float)damageResultP1 && P1HealthBarSource.sliderP1.value != 0)
         { 
@@ -240,7 +266,9 @@ public class Battle : MonoBehaviour
         damageCalc = effectivenessCalc(damageCalc, input, P2MovesSource.moveSetP2[input].type.name, p1Types);
 
         //STAB
-        if(P2.typeGlobalP2.Count == 2)
+
+        damageCalc = stabCalc(damageCalc, p1Types, P2MovesSource.moveSetP2[input].type.name);
+/*        if(P2.typeGlobalP2.Count == 2)
         {
             if (P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[0].type.name || P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[1].type.name)
             {
@@ -255,7 +283,7 @@ public class Battle : MonoBehaviour
                 damageCalc = damageCalc * 1.5;
                 Debug.Log("1Type: STAB");
             }
-        }
+        }*/
   
        
 
@@ -286,18 +314,7 @@ public class Battle : MonoBehaviour
             float playerAttack = P1.statsGlobalP1[1].base_stat;
             float targetDefense = P2.statsGlobalP2[2].base_stat;
 
-            /*   Debug.Log(playerPower);
-               Debug.Log(targetHealth);
-               Debug.Log(playerAttack);
-               Debug.Log(targetDefense);*/
-
             int calcRandom = Random.Range(80, 100);
-
-
-        
-
-            
-          
 
             //normal effect, 2x super effective, 4x super effective, 0.5 not effective, 0.25 not effective, no effect
 
@@ -319,7 +336,7 @@ public class Battle : MonoBehaviour
 
 
             //STAB
-            if (P1.typeGlobalP1.Count == 2)
+/*            if (P1.typeGlobalP1.Count == 2)
             {
                 if (P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[0].type.name || P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[1].type.name)
                 {
@@ -334,19 +351,46 @@ public class Battle : MonoBehaviour
                     damageCalc = damageCalc * 1.5;
                     Debug.Log("1Type: STAB");
                 }
-            }
-            /*
-                        if (damageCalc <= 2)
-                        {
-                            damageCalc = 2;
-                        }*/
+            }*/
 
+            damageCalc = stabCalc(damageCalc, p2Types, P1MovesSource.moveSetP1[input].type.name);
 
             damageResultP1 = damageCalc;
+
+
         }
 
   //      return damageCalc;
 
+    }
+
+    private double stabCalc(double damageCalc, List<string> pokeTypes, string moveType )
+    {
+
+        if (pokeTypes.Count == 2)
+        {
+            if (moveType == pokeTypes[0] || moveType == pokeTypes[1])
+            {
+                damageCalc = damageCalc * 1.5;
+                Debug.Log("2TYPE: STAB");
+            }
+        }
+        else if (pokeTypes.Count == 1)
+        {
+            if (moveType == pokeTypes[0])
+            {
+                damageCalc = damageCalc * 1.5;
+                Debug.Log("1Type: STAB");
+            }
+
+        }
+
+        else
+        {
+            damageCalc = damageCalc * 1;
+        }
+
+        return damageCalc;
     }
     
 
@@ -357,6 +401,8 @@ public class Battle : MonoBehaviour
 
         Debug.Log("Before Calcs: " + damageCalc);
 
+        double beforeDamageCalc = damageCalc;
+
         Debug.Log("P HAS THIS MANY TYPES" + P2.typeGlobalP2.Count);
 
 
@@ -364,11 +410,13 @@ public class Battle : MonoBehaviour
         {
             damageCalc = damageCalc * 2;
             Debug.Log("2x");
+            
         }
         else if (typeEffectiveness.notEffective[dealingDamage].Contains(takingDamage[0]))
         {
             damageCalc = damageCalc * 0.5;
             Debug.Log("0.5x");
+          
         }
         else if (typeEffectiveness.noEffect[dealingDamage].Contains(takingDamage[0]))
         {
@@ -380,6 +428,7 @@ public class Battle : MonoBehaviour
         {
             damageCalc = damageCalc * 1;
             Debug.Log("nothing");
+           
 
         }
 
@@ -389,11 +438,13 @@ public class Battle : MonoBehaviour
             {
                 damageCalc = damageCalc * 2;
                 Debug.Log("2type: 4x");
+                
             }
             else if (typeEffectiveness.notEffective[dealingDamage].Contains(takingDamage[1]))
             {
                 damageCalc = damageCalc * 0.5;
                 Debug.Log("2type: 0.5x");
+                
             }
             else if (typeEffectiveness.noEffect[dealingDamage].Contains(takingDamage[1]))
             {
@@ -410,7 +461,18 @@ public class Battle : MonoBehaviour
             }
         }
 
-
+        if(beforeDamageCalc * 2 == damageCalc || beforeDamageCalc * 4 == damageCalc)
+        {
+            superEffective = true;
+        }
+        else if (beforeDamageCalc * 0.5 == damageCalc || beforeDamageCalc * 0.25 == damageCalc)
+        {
+            notEffective = true;
+        }
+        else
+        {
+            normalEffect = true;
+        }
         Debug.Log("After Calcs: " + damageCalc);
         Debug.Log("END HERE");
 

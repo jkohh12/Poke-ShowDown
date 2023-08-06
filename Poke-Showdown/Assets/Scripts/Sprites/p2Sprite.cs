@@ -13,7 +13,7 @@ public class p2Sprite : MonoBehaviour
     private int randNum;
 
     private int currentSprite = 0;
-    private bool isReady = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,9 +58,10 @@ public class p2Sprite : MonoBehaviour
    
         spriteRenderer.sprite = spriteArrayP2[currentSprite];
         currentSprite++;
-        if (currentSprite >= spriteArrayP2.Length - 1)
+        if (currentSprite >= spriteArrayP2.Length)
         {
             currentSprite = 0;
+            spriteRenderer.sprite = spriteArrayP2[currentSprite];
         }
         yield return new WaitForSeconds(0.1f);
 

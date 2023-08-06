@@ -15,7 +15,7 @@ public class p1Sprite : MonoBehaviour
 
     private int currentSprite = 0;
 
-    private bool isReady = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,9 +54,10 @@ public class p1Sprite : MonoBehaviour
         
         spriteRenderer.sprite = spriteArrayP1[currentSprite];
         currentSprite++;
-        if (currentSprite >= spriteArrayP1.Length - 1)
+        if (currentSprite >= spriteArrayP1.Length)
         {
             currentSprite = 0;
+            spriteRenderer.sprite = spriteArrayP1[currentSprite];
         }
         yield return new WaitForSeconds(0.1f);
         
