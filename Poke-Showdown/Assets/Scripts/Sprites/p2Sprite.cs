@@ -48,32 +48,14 @@ public class p2Sprite : MonoBehaviour
             spriteArrayP2 = handleToCheck.Result;
         }
 
-        isReady = true;
+        StartCoroutine(UpdateAnimation());
     }
 
 
-
-    private void Update()
-    {
-
-        if (isReady)
-        {
-            if (spriteRenderer.sprite == null)
-            {
-                spriteRenderer.sprite = spriteArrayP2[0];
-            }
-            StartCoroutine(UpdateAnimation());
-
-
-
-        }
-
-
-    }
 
     IEnumerator UpdateAnimation()
     {
-        isReady = false;
+   
         spriteRenderer.sprite = spriteArrayP2[currentSprite];
         currentSprite++;
         if (currentSprite >= spriteArrayP2.Length - 1)
@@ -81,6 +63,7 @@ public class p2Sprite : MonoBehaviour
             currentSprite = 0;
         }
         yield return new WaitForSeconds(0.1f);
-        isReady = true;
+
+        StartCoroutine(UpdateAnimation());
     }
 }
