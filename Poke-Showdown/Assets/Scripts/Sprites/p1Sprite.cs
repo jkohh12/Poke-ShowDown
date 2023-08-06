@@ -72,7 +72,7 @@ public class p1Sprite : MonoBehaviour
         {
             currentSprite = 0;
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         isReady = true;
     }
 
