@@ -110,12 +110,6 @@ public class Battle : MonoBehaviour
            
         }
 
-        if(p1Turn && p1Alive || p1Turn && p2Alive)
-        {
-           // dialogueText.text = "";
-            dialogueText.text = "What will " + P1.textP1.text + " do?";
-        }
-
 
         if (P2HealthBarSource.sliderP2.value == 0 && p2Alive)
         {
@@ -245,6 +239,7 @@ public class Battle : MonoBehaviour
 
         damageCalc = effectivenessCalc(damageCalc, input, P2MovesSource.moveSetP2[input].type.name, p1Types);
 
+        //STAB
         if(P2.typeGlobalP2.Count == 2)
         {
             if (P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[0].type.name || P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[1].type.name)
@@ -261,7 +256,7 @@ public class Battle : MonoBehaviour
                 Debug.Log("1Type: STAB");
             }
         }
-        //STAB
+  
        
 
 
@@ -323,6 +318,7 @@ public class Battle : MonoBehaviour
             damageCalc = effectivenessCalc(damageCalc, input, P1MovesSource.moveSetP1[input].type.name, p2Types);
 
 
+            //STAB
             if (P1.typeGlobalP1.Count == 2)
             {
                 if (P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[0].type.name || P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[1].type.name)
@@ -345,7 +341,6 @@ public class Battle : MonoBehaviour
                             damageCalc = 2;
                         }*/
 
-            //STAB CALC
 
             damageResultP1 = damageCalc;
         }
