@@ -24,9 +24,13 @@ public class Battle : MonoBehaviour
     [SerializeField] private TypeEffectiveness typeEffectiveness;
 
 
-    [SerializeField] private AudioSource[] effectivenessSound;
 
-    [SerializeField] private AudioSource[] mainBGM;
+    [Header("Audio")]
+    [SerializeField] private AudioSource[] effectivenessSound;
+    [SerializeField] private AudioSource mainBGM;
+    [SerializeField] private AudioSource victoryBGM;
+    [SerializeField] private AudioSource lowHP;
+    
 
 /*    [SerializeField] GameObject newP1;
     [SerializeField] GameObject newP2;*/
@@ -54,24 +58,26 @@ public class Battle : MonoBehaviour
     private bool notEffective = false;
     private bool normalEffect = false;
 
+    private bool victoryTheme = false;
+
     private bool hasTwoTypes = false;
     private int typeCounter = 0;
 
-
+    private float currentHealth;
 
 
     //onClick(player clicks)
 
     private void Start()
     {
-        mainBGM[0].Play();
+        mainBGM.Play();
         // string nameP1Cap = char.ToUpper(P1.name[0]) + P1.name.Substring(1);
         p1Name = P1.textP1.text;
         p2Name = P2.textP2.text;
         /*        Debug.Log(p1Name);
                 Debug.Log(p2Name);*/
         dialogueText.text = "What will " + P1.textP1.text + " do?";
-
+        currentHealth = P1.statsGlobalP1[0].base_stat;
 
 
 
@@ -80,11 +86,13 @@ public class Battle : MonoBehaviour
 
     void Update()
     {
+        
 
         //Testing
         if (Input.GetButtonDown("Jump"))
         {
             chooseMove(0);
+            //Debug.Log(P1.statsGlobalP1[0].base_stat);
         }
 
         if (superEffective)
@@ -139,28 +147,24 @@ public class Battle : MonoBehaviour
 
         if (P2HealthBarSource.sliderP2.value == 0 && p2Alive)
         {
-
+            p2Alive = false;
             // P2HealthBarSource.sliderP2.value = -1;
             StartCoroutine(p2Faint());
-
-        }
-
-        if (!p2Alive)
-        {
             StartCoroutine(victoryText());
+            
+
+
         }
+
 
         if(P1HealthBarSource.sliderP1.value == 0 && p1Alive)
         {
+            p1Alive = false;
 
             StartCoroutine(p1Faint());
-
-        }
-
-        if (!p1Alive/*P1HealthBarSource.sliderP1.value == -1*/)
-        {
             StartCoroutine(lossText());
         }
+
         //
 
     }
@@ -174,7 +178,7 @@ public class Battle : MonoBehaviour
         dialogueText.text = p1Name + " fainted!";
         P1.textP1.text = "";
         p1sprite.gameObject.SetActive(false);
-        p1Alive = false;
+  
     }
 
 
@@ -187,12 +191,14 @@ public class Battle : MonoBehaviour
         dialogueText.text = "The foe's " + p2Name + " fainted!";
         P2.textP2.text = "";
         p2sprite.gameObject.SetActive(false);
-        p2Alive = false;
+
+        mainBGM.FadeOut(2f);
+
     }
 
     IEnumerator lossText()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         dialogueText.text = "";
         setLossText();
         //
@@ -200,7 +206,7 @@ public class Battle : MonoBehaviour
 
     IEnumerator victoryText()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         dialogueText.text = "";
         setVictoryText();
         // 
@@ -211,6 +217,10 @@ public class Battle : MonoBehaviour
     {
         dialogueText.text = "";
         dialogueText.text = "You defeated the enemy trainer!";
+ 
+        //mainBGM.Stop();
+        victoryBGM.Play();
+        
     }
 
     public void setLossText()
@@ -227,6 +237,13 @@ public class Battle : MonoBehaviour
         enemyChooseMove(enemyRandomMove);
        
  
+
+    }
+
+    IEnumerator playLowHP()
+    {
+        yield return new WaitForSeconds(0.5f);
+        lowHP.Play();
 
     }
 
@@ -268,31 +285,27 @@ public class Battle : MonoBehaviour
         //STAB
 
         damageCalc = stabCalc(damageCalc, p1Types, P2MovesSource.moveSetP2[input].type.name);
-/*        if(P2.typeGlobalP2.Count == 2)
-        {
-            if (P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[0].type.name || P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[1].type.name)
-            {
-                damageCalc = damageCalc * 1.5;
-                Debug.Log("2TYPE: STAB");
-            }
-        }
-        else
-        {
-            if(P2MovesSource.moveSetP2[input].type.name == P2.typeGlobalP2[0].type.name)
-            {
-                damageCalc = damageCalc * 1.5;
-                Debug.Log("1Type: STAB");
-            }
-        }*/
-  
-       
 
 
-/*        if (damageCalc <= 2)
+
+
+        /*        if (damageCalc <= 2)
+                {
+                    damageCalc = 2;
+                }
+        */
+      
+        currentHealth = currentHealth - (float) damageCalc;
+
+
+        if (currentHealth/targetHealth <= 0.160 && currentHealth/targetHealth > 0) //normalize percent value?
         {
-            damageCalc = 2;
+         
+            mainBGM.FadeOut(1f);
+            StartCoroutine(playLowHP());
         }
-*/
+        
+
         damageResultP2 = damageCalc;
         p1Turn = true;
 
@@ -333,25 +346,6 @@ public class Battle : MonoBehaviour
             }
 
             damageCalc = effectivenessCalc(damageCalc, input, P1MovesSource.moveSetP1[input].type.name, p2Types);
-
-
-            //STAB
-/*            if (P1.typeGlobalP1.Count == 2)
-            {
-                if (P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[0].type.name || P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[1].type.name)
-                {
-                    damageCalc = damageCalc * 1.5;
-                    Debug.Log("2TYPE: STAB");
-                }
-            }
-            else
-            {
-                if (P1MovesSource.moveSetP1[input].type.name == P1.typeGlobalP1[0].type.name)
-                {
-                    damageCalc = damageCalc * 1.5;
-                    Debug.Log("1Type: STAB");
-                }
-            }*/
 
             damageCalc = stabCalc(damageCalc, p2Types, P1MovesSource.moveSetP1[input].type.name);
 
@@ -461,6 +455,8 @@ public class Battle : MonoBehaviour
             }
         }
 
+
+        //check which type of Effectiveness
         if(beforeDamageCalc * 2 == damageCalc || beforeDamageCalc * 4 == damageCalc)
         {
             superEffective = true;
@@ -469,9 +465,15 @@ public class Battle : MonoBehaviour
         {
             notEffective = true;
         }
-        else
+        else if (beforeDamageCalc == damageCalc)
         {
             normalEffect = true;
+        }
+        else if(damageCalc == 0)
+        {
+            superEffective = false;
+            notEffective = false;
+            normalEffect = false;
         }
         Debug.Log("After Calcs: " + damageCalc);
         Debug.Log("END HERE");

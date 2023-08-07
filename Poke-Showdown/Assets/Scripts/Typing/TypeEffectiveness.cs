@@ -21,7 +21,7 @@ public class TypeEffectiveness : MonoBehaviour
         superEffective.Add("grass", new string[] { "water", "ground", "rock" });
         superEffective.Add("ice", new string[] { "grass", "ground", "flying", "dragon" });
         superEffective.Add("fighting", new string[] { "normal", "ice", "rock", "dark", "steel" });
-        superEffective.Add("poision", new string[] { "grass", "fairy" });
+        superEffective.Add("poison", new string[] { "grass", "fairy" });
         superEffective.Add("ground", new string[] { "fire", "electric", "poison", "rock", "steel" });
         superEffective.Add("fairy", new string[] { "fighting", "dragon", "dark" });
         superEffective.Add("steel", new string[] { "ice", "rock", "fairy" });
@@ -41,7 +41,7 @@ public class TypeEffectiveness : MonoBehaviour
         notEffective.Add("grass", new string[] { "fire", "grass", "poison", "flying", "bug", "dragon", "steel" });
         notEffective.Add("ice", new string[] { "fire", "water", "ice", "steel" });
         notEffective.Add("fighting", new string[] { "poison", "flying", "psychic", "bug", "fairy" });
-        notEffective.Add("poision", new string[] { "poison", "ground", "rock", "ghost" });
+        notEffective.Add("poison", new string[] { "poison", "ground", "rock", "ghost" });
         notEffective.Add("ground", new string[] { "grass", "bug" });
         notEffective.Add("fairy", new string[] { "poison", "steel" });
         notEffective.Add("steel", new string[] { "fire", "fighting", "ground" });
@@ -60,7 +60,7 @@ public class TypeEffectiveness : MonoBehaviour
         noEffect.Add("grass", new string[] {});
         noEffect.Add("ice", new string[] {});
         noEffect.Add("fighting", new string[] { "ghost" });
-        noEffect.Add("poision", new string[] { "steel" });
+        noEffect.Add("poison", new string[] { "steel" });
         noEffect.Add("ground", new string[] { "flying" });
         noEffect.Add("flying", new string[] { });
         noEffect.Add("psychic", new string[] { "dark" });
