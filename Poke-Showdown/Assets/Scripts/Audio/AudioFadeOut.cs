@@ -18,7 +18,7 @@ namespace UnityEngine
             {
                 adjustedVolume -= startVolume * Time.deltaTime / duration;
                 a.volume = adjustedVolume;
-                Debug.Log(adjustedVolume);
+                //Debug.Log(adjustedVolume);
                 yield return null;
             }
 
