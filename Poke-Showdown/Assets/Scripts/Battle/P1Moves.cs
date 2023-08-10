@@ -12,6 +12,7 @@ public class P1Moves : MonoBehaviour
     public List<moveStats> movePoolAttackP1 = new List<moveStats>();
     public List<moveStats> moveSetP1 = new List<moveStats>();
 
+
     private int randomNum;
 
     public int moveCounterP1 = 0;
@@ -235,7 +236,7 @@ public class P1Moves : MonoBehaviour
                         movePoolAttackP1.Add(moveStat);
 
                     }
-
+                    
                     poolFullP1 = true;
 
 
@@ -254,8 +255,8 @@ public class P1Moves : MonoBehaviour
         {
             randomNum = Random.Range(0, movePoolAttackP1.Count - 1); //number in between 0 and end of movePoolAttack list
             moveSetP1.Add(movePoolAttackP1[randomNum]);
-            Debug.Log("Player 1" + moveSetP1[moveCounterP1].name);
-            Debug.Log("Player 1 Move" + moveSetP1[moveCounterP1].type.name);
+           /* Debug.Log("Player 1" + moveSetP1[moveCounterP1].name);
+            Debug.Log("Player 1 Move" + moveSetP1[moveCounterP1].type.name);*/
 
             moveCounterP1++;
         }

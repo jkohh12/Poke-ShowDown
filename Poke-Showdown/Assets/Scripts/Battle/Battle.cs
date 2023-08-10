@@ -153,8 +153,8 @@ public class Battle : MonoBehaviour
         { 
 
             //Debug.Log("P1 DAMAGE" + damageResultP1);
-            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.4f);
-            actionCounterP1 += 0.4f;
+            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 1f);
+            actionCounterP1 += 1f;
             if(actionCounterP1 >= (float)damageResultP1)
             {
                 actionCounterP1 = 0;
@@ -172,8 +172,8 @@ public class Battle : MonoBehaviour
         {
 
             //Debug.Log("P2 DAMAGE" + damageResultP2 );
-            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.4f);
-            actionCounterP2 += 0.4f;
+            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 1f);
+            actionCounterP2 += 1f;
             if(actionCounterP2 >= (float)damageResultP2)
             {
 
@@ -409,78 +409,101 @@ public class Battle : MonoBehaviour
     }
     public void enemyChooseMove(int input) //make it wait for moves to generate
     {
-        
-        string p2MoveCap = char.ToUpper(P2MovesSource.moveSetP2[input].name[0]) + P2MovesSource.moveSetP2[input].name.Substring(1);
-        dialogueText.text = "";
-        dialogueText.text = "The foe's " + P2.textP2.text + " used " + p2MoveCap + "!";
-        int? enemyPower = P2MovesSource.moveSetP2[input].power;
-        float targetHealth = P1.statsGlobalP1[0].base_stat;
-        float enemyAttack = P2.statsGlobalP2[1].base_stat;
-        float targetDefense = P2.statsGlobalP2[2].base_stat;
 
-        int calcRandom = Random.Range(80, 100);
-        int accRandom = Random.Range(1, 100);
-
-        double damageCalc;
-        if (accRandom > P2MovesSource.moveSetP2[input].accuracy)
+        if (p2Turn && P2HealthBarSource.sliderP2.value != 0 && P1HealthBarSource.sliderP1.value != 0)
         {
 
-            Debug.Log("P2: MISS");
-            moveMiss = true;
-            damageCalc = 0;
-            return;
-        }
-        else
-        {
-            damageCalc = ((((int)enemyPower * (enemyAttack / targetDefense) * 10) / 50) /* * STAB  * TYPE1 * TYPE2 (type effectiveness)add it later */ * calcRandom) / 100;
-        }
-
-        List<string> p1Types = new List<string>();
-        if (P1.typeGlobalP1.Count == 2)
-        {
-            p1Types.Add(P1.typeGlobalP1[0].type.name);
-            p1Types.Add(P1.typeGlobalP1[1].type.name);
-
-        }
-        else
-        {
-            p1Types.Add(P1.typeGlobalP1[0].type.name);
-
-        }
-
-        damageCalc = effectivenessCalc(damageCalc, input, P2MovesSource.moveSetP2[input].type.name, p1Types);
-
-        //STAB
-
-        damageCalc = stabCalc(damageCalc, p1Types, P2MovesSource.moveSetP2[input].type.name);
+            string p2MoveCap = char.ToUpper(P2MovesSource.moveSetP2[input].name[0]) + P2MovesSource.moveSetP2[input].name.Substring(1);
+            dialogueText.text = "";
+            dialogueText.text = "The foe's " + P2.textP2.text + " used " + p2MoveCap + "!";
+            int? enemyPower = P2MovesSource.moveSetP2[input].power;
+            float targetHealth = P1.statsGlobalP1[0].base_stat;
 
 
+            float enemyAttack = P2.statsGlobalP2[1].base_stat;
+            float enemySpAttack = P2.statsGlobalP2[3].base_stat;
 
+            float targetDefense = P2.statsGlobalP2[2].base_stat;
+            float targetSpDefense = P2.statsGlobalP2[4].base_stat;
 
-        /*        if (damageCalc <= 2)
+            int calcRandom = Random.Range(80, 100);
+            int accRandom = Random.Range(1, 100);
+
+            double damageCalc;
+            if (accRandom > P2MovesSource.moveSetP2[input].accuracy)
+            {
+
+                Debug.Log("P2: MISS");
+                moveMiss = true;
+                damageCalc = 0;
+                return;
+            }
+            else
+            {
+                if (P2MovesSource.moveSetP2[input].damage_class.name == "physical")
                 {
-                    damageCalc = 2;
+                    damageCalc = ((((int)enemyPower * (enemyAttack / targetDefense) * 10) / 50) * calcRandom) / 100;
+                    Debug.Log("p2: PHYS");
                 }
-        */
-      
-        currentHealth = currentHealth - (float) damageCalc;
+                else
+                {
+                    damageCalc = ((((int)enemyPower * (enemySpAttack / targetSpDefense) * 10) / 50) * calcRandom) / 100;
+                    Debug.Log("p2: SP");
+                }
+
+            }
 
 
-        if (currentHealth/targetHealth <= 0.160 && currentHealth/targetHealth > 0) //normalize percent value?
-        {
-         
-            mainBGM.FadeOut(1f);
-            StartCoroutine(playLowHP());
+            List<string> p1Types = new List<string>();
+            if (P1.typeGlobalP1.Count == 2)
+            {
+                p1Types.Add(P1.typeGlobalP1[0].type.name);
+                p1Types.Add(P1.typeGlobalP1[1].type.name);
+
+            }
+            else
+            {
+                p1Types.Add(P1.typeGlobalP1[0].type.name);
+
+            }
+
+            damageCalc = effectivenessCalc(damageCalc, input, P2MovesSource.moveSetP2[input].type.name, p1Types);
+
+            //STAB
+            damageCalc = stabCalc(damageCalc, p1Types, P2MovesSource.moveSetP2[input].type.name);
+
+
+
+
+            /*        if (damageCalc <= 2)
+                    {
+                        damageCalc = 2;
+                    }
+            */
+
+            currentHealth = currentHealth - (float)damageCalc;
+
+
+            if (currentHealth / targetHealth <= 0.160 && currentHealth / targetHealth > 0) //normalize percent value?
+            {
+
+                mainBGM.FadeOut(1f);
+                StartCoroutine(playLowHP());
+            }
+
+
+            damageResultP2 = damageCalc;
+            Mathf.Floor((float)damageResultP2);
+
+            effectText = false;
+
+            Debug.Log("P2 DAMAGE: " + damageResultP2);
+
+            //p1Turn = true;
+
+
+            //        return damageCalc;
         }
-        
-
-        damageResultP2 = damageCalc;
-        effectText = false;
-
-        //p1Turn = true;
-
-
-//        return damageCalc;
     }
 
 
@@ -496,8 +519,14 @@ public class Battle : MonoBehaviour
 
             int? playerPower = P1MovesSource.moveSetP1[input].power;
             float targetHealth = P2.statsGlobalP2[0].base_stat;
+
+            //Attacks
             float playerAttack = P1.statsGlobalP1[1].base_stat;
+            float playerSpAttack = P1.statsGlobalP1[3].base_stat;
+            
+            //Defenses
             float targetDefense = P2.statsGlobalP2[2].base_stat;
+            float targetSpDefense = P2.statsGlobalP2[4].base_stat;
 
             int calcRandom = Random.Range(80, 100);
             int accRandom = Random.Range(1, 100);
@@ -516,7 +545,17 @@ public class Battle : MonoBehaviour
             }
             else
             {
-                damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10) / 50) /* * STAB  * TYPE1 * TYPE2 (type effectiveness)add it later */ * calcRandom) / 100;
+                if(P1MovesSource.moveSetP1[input].damage_class.name == "physical") 
+                {
+                    damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10) / 50) * calcRandom) / 100;
+                    Debug.Log("p1: PHYS");
+                }
+                
+                else
+                {
+                    damageCalc = ((((int)playerPower * (playerSpAttack / targetSpDefense) * 10) / 50) * calcRandom) / 100;
+                    Debug.Log("p1: SP");
+                }
             }
 
             List<string> p2Types = new List<string>();
@@ -533,10 +572,14 @@ public class Battle : MonoBehaviour
 
             damageCalc = effectivenessCalc(damageCalc, input, P1MovesSource.moveSetP1[input].type.name, p2Types);
 
+            //STAB
             damageCalc = stabCalc(damageCalc, p2Types, P1MovesSource.moveSetP1[input].type.name);
 
             damageResultP1 = damageCalc;
-       
+
+            Mathf.Floor((float)damageResultP1);
+
+            Debug.Log("P1 DAMAGE: " + damageResultP1);
 
         }
     }
@@ -587,25 +630,25 @@ public class Battle : MonoBehaviour
         if (typeEffectiveness.superEffective[dealingDamage].Contains(takingDamage[0]))
         {
             damageCalc = damageCalc * 2;
-            Debug.Log("2x");
+           // Debug.Log("2x");
             
         }
         else if (typeEffectiveness.notEffective[dealingDamage].Contains(takingDamage[0]))
         {
             damageCalc = damageCalc * 0.5;
-            Debug.Log("0.5x");
+           // Debug.Log("0.5x");
           
         }
         else if (typeEffectiveness.noEffect[dealingDamage].Contains(takingDamage[0]))
         {
             damageCalc = 0;
-            Debug.Log("no Effect");
+           // Debug.Log("no Effect");
         }
 
         else
         {
             damageCalc = damageCalc * 1;
-            Debug.Log("nothing");
+           // Debug.Log("nothing");
            
 
         }
@@ -615,26 +658,26 @@ public class Battle : MonoBehaviour
             if (typeEffectiveness.superEffective[dealingDamage].Contains(takingDamage[1]))
             {
                 damageCalc = damageCalc * 2;
-                Debug.Log("2type: 4x");
+              //  Debug.Log("2type: 4x");
                 
             }
             else if (typeEffectiveness.notEffective[dealingDamage].Contains(takingDamage[1]))
             {
                 damageCalc = damageCalc * 0.5;
-                Debug.Log("2type: 0.5x");
+              //  Debug.Log("2type: 0.5x");
                 
             }
             else if (typeEffectiveness.noEffect[dealingDamage].Contains(takingDamage[1]))
             {
                 damageCalc = 0;
-                Debug.Log("2type: NoEffect");
+              //  Debug.Log("2type: NoEffect");
 
             }
 
             else
             {
                 damageCalc = damageCalc * 1;
-                Debug.Log("2type: nothing");
+               // Debug.Log("2type: nothing");
 
             }
         }
