@@ -11,15 +11,20 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 
 ## Features (WIP)
 
-* Random Pokemon Generation (PokeAPI)
-* Random Moveset Generation (PokeAPI)
-* Name Generation based off of Pokemon
-* Fully Functioning Health Bar (Changes Gradient Depending on Health Value)
-* Fully Animated Sprites for each Pokemon (WIP)
-* Type Effectiveness and Damage calculations (SuperEffective, NotEffective, NoEffect) (WIP)
-* Functioning Dialogue Box, similar to dialogue box seen in Pokemon Series
+* Random Pokemon Generation. (PokeAPI)
+* Random Moveset Generation. (PokeAPI)
+* Name Generation based off of Pokemon.
+* Fully Functioning Health Bar. (Changes Gradient Depending on Health Value)
+* Fully Animated Sprites for each Pokemon. (WIP)
+* Type Effectiveness and Damage calculations. (SuperEffective, NotEffective, NoEffect)
+* Move Miss/Speed Calc.
+* SpAttack/PhysAttack distinction.
+* Functioning Dialogue Box, similar to dialogue box seen in Pokemon Series.
 * Functionality in Browser, with Web Development.
-* Battle Music
+* Battle Music.
+* Low HP music.
+* Victory Music.
+* Super Effective/Not Effective/Normal Effective hit sound effects.
 * Move Selection with buttons.
 
 __Functionality in Unity Game Engine__
