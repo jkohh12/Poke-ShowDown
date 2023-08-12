@@ -30,7 +30,7 @@ public class Battle : MonoBehaviour
     [SerializeField] private AudioSource mainBGM;
     [SerializeField] private AudioSource victoryBGM;
     [SerializeField] private AudioSource lowHP;
-    
+    [SerializeField] private AudioSource YOULOST;
 
 /*    [SerializeField] GameObject newP1;
     [SerializeField] GameObject newP2;*/
@@ -320,9 +320,11 @@ public class Battle : MonoBehaviour
         P1.textP1.text = "";
         p1sprite.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
+        lowHP.FadeOut(1f);
+        mainBGM.FadeOut(2f);
         setLossText();
 
-        lowHP.FadeOut(1f);
+        
 
   
     }
@@ -375,6 +377,8 @@ public class Battle : MonoBehaviour
     {
         dialogueText.text = "";
         dialogueText.text = "You lost";
+
+        YOULOST.Play(); //change later lol
     }
 
     IEnumerator p1Move()
@@ -576,7 +580,7 @@ public class Battle : MonoBehaviour
             }
 
 
-        damageResultP2 =  damageCalc;
+        damageResultP2 = damageCalc;
             Mathf.Floor((float)damageResultP2);
 
             effectText = false;
