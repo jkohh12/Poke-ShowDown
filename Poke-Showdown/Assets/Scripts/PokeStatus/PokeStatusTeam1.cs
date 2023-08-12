@@ -433,17 +433,17 @@ public class PokeStatusTeam1 : MonoBehaviour
     }
     private void Awake()
     {
-        setUpPokemonP2();
-
-
-    }
-
-    public void setUpPokemonP2()
-    {
+        //use for multiple pokemon // setUpPokemonP2();
         randNumberP1 = Random.Range(1, 650);
         // Debug.Log(randNumberP1);
         StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberP1.ToString()));
+
     }
+
+/*    public void setUpPokemonP2()
+    {
+
+    }*/
     IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))

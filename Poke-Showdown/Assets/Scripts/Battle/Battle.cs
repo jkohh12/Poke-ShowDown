@@ -45,8 +45,8 @@ public class Battle : MonoBehaviour
     private double damageResultP2;
     private float p2healthbarVal;
 
-    private bool p1Turn;
-    private bool p2Turn;
+    private bool p1Turn = true;
+    private bool p2Turn = false;
 
     private string p1Name;
     private string p2Name;
@@ -58,13 +58,21 @@ public class Battle : MonoBehaviour
     private bool p1Dialogue = false;
     private bool effectText = false;
 
+    private bool superEffectiveSound = false;
+    private bool notEffectiveSound = false;
+    private bool normalEffectSound = false;
+    private bool noEffectSound = false;
+
     private bool superEffective = false;
     private bool notEffective = false;
     private bool normalEffect = false;
     private bool noEffect = false;
+
     private bool moveMiss = false;
 
-    private bool victoryTheme = false;
+
+
+    private bool canChooseMove = true;
 
     private float currentHealth;
 
@@ -100,35 +108,39 @@ public class Battle : MonoBehaviour
             //Debug.Log(P1.statsGlobalP1[0].base_stat);
         }
 
-        if (superEffective)
+        if (superEffectiveSound)
         {
             effectivenessSound[1].Play();
-            StartCoroutine(effectivenessText("superEffective"));
+            //StartCoroutine(effectivenessText("superEffective"));
             /*            dialogueText.text = "";
                         dialogueText.text = "It's super effective!";*/
-            superEffective = false;
+            superEffective = true;
+            superEffectiveSound = false;
         }
-        else if (notEffective)
+        else if (notEffectiveSound)
         {
             effectivenessSound[2].Play();
-            StartCoroutine(effectivenessText("notEffective"));
+            //StartCoroutine(effectivenessText("notEffective"));
             /*            dialogueText.text = "";
                         dialogueText.text = "It's not very effective...";*/
-            notEffective = false;
+            notEffective = true;
+            notEffectiveSound = false;
         }
-        else if (normalEffect)
+        else if (normalEffectSound)
         {
             effectivenessSound[0].Play();
-            StartCoroutine(effectivenessText("normalEffective"));
+            //StartCoroutine(effectivenessText("normalEffective"));
             /*            dialogueText.text = "";
                         dialogueText.text = "normal effective";*/
-            normalEffect = false;
+            normalEffect = true;
+            normalEffectSound = false;
         }
 
-        else if (noEffect)
+        else if (noEffectSound)
         {
-            StartCoroutine(effectivenessText("noEffect"));
-            noEffect = false;
+            //StartCoroutine(effectivenessText("noEffect"));
+            noEffect = true;
+            noEffectSound = false;
         }
         /*
                 if(p1Action && damageResultP1 == 0) 
@@ -136,13 +148,14 @@ public class Battle : MonoBehaviour
 
                 }*/
 
-        if (noEffect && !p2Turn || moveMiss && !p2Turn)
+        //TODO: Fix move miss and no effect
+        if (noEffectSound && !p2Turn || moveMiss && !p2Turn)
         {
             moveMiss = false;
             StartCoroutine(enemyMove());
             
         }
-        else if(noEffect && !p1Turn || moveMiss && !p1Turn)
+        else if(noEffectSound && !p1Turn || moveMiss && !p1Turn)
         {
             moveMiss = false;
             StartCoroutine(p1Move());
@@ -159,9 +172,14 @@ public class Battle : MonoBehaviour
             {
                 actionCounterP1 = 0;
                 damageResultP1 = 0;
+
                 if(P2HealthBarSource.sliderP2.value != 0 && !p2Turn)
                 {
-                    StartCoroutine(enemyMove());
+                  
+                   //StartCoroutine(effectivenessText());
+                   StartCoroutine(enemyMove());
+                   // StartCoroutine(effectivenessText());
+                    //StartCoroutine(p1DialogueText());
                 }
 
 
@@ -181,9 +199,12 @@ public class Battle : MonoBehaviour
                 damageResultP2 = 0;
                 if(P1HealthBarSource.sliderP1.value != 0 && !p1Turn)
                 {
-     
-                    StartCoroutine(p1Move());
                     
+                    //StartCoroutine(effectivenessText());
+                   StartCoroutine(p1Move());
+                  //  StartCoroutine(effectivenessText());
+                   // StartCoroutine(p1DialogueText());
+
 
                 }
 
@@ -202,7 +223,7 @@ public class Battle : MonoBehaviour
             p2Alive = false;
             // P2HealthBarSource.sliderP2.value = -1;
             StartCoroutine(p2Faint());
-            StartCoroutine(victoryText());
+            
             
 
 
@@ -214,7 +235,7 @@ public class Battle : MonoBehaviour
             p1Alive = false;
 
             StartCoroutine(p1Faint());
-            StartCoroutine(lossText());
+          
         }
 
         //
@@ -222,84 +243,108 @@ public class Battle : MonoBehaviour
     }
 
 
-    IEnumerator effectivenessText(string effectiveness)
+    IEnumerator effectivenessText()
     {
 
         //TODO: Rework 
-        yield return new WaitUntil(() => actionCounterP1 >= damageResultP2 || actionCounterP1 >= damageResultP1);
-        yield return new WaitForSeconds(1f);
-        if (effectiveness == "superEffective")
+
+        Debug.Log("GOT TO HERE");
+        
+        if (superEffective)
         {
+            yield return new WaitForSeconds(1f);
             dialogueText.text = "";
             dialogueText.text = "It's super effective!";
+            Debug.Log("WE TO HERE");
+            superEffective = false;
 
         }
 
-        else if (effectiveness == "notEffective")
+        else if (notEffective)
         {
+            yield return new WaitForSeconds(1f);
             dialogueText.text = "";
             dialogueText.text = "It's not very effective...";
+            Debug.Log("WE TO HERE");
+            notEffective = false;
         }
-        else if (effectiveness == "noEffect")
+        else if (noEffect)
         {
+            yield return new WaitForSeconds(1f);
             dialogueText.text = "";
             dialogueText.text = "It has no effect";
+            Debug.Log("WE TO HERE");
+            noEffect = false;
         }
-        p1Dialogue = true;
+        else
+        {
+            Debug.Log("WE TO HERE");
+            normalEffect = false;
+        }
+
+
+/*        p1Dialogue = true;
 
         yield return new WaitForSeconds(1f);
 
-        effectText = true;
+        effectText = true;*/
 
-        StartCoroutine(p1DialogueText());
+        
      
 
 
 
     }
 
-    IEnumerator p1DialogueText()
+    public void p1DialogueText()
     {
-        yield return new WaitUntil(() => p1Dialogue == true);
-        yield return new WaitForSeconds(1f);
+/*        yield return new WaitUntil(() => p1Dialogue == true);*/
+        
 
-        if(p1Alive && p2Alive && p1Turn)
-        {
+ /*       if(p1Alive && p2Alive && p1Turn && !p2Turn)
+        {*/
+           // yield return new WaitForSeconds(1f);
             dialogueText.text = "What will " + P1.textP1.text + " do?";
-        }
-        p1Dialogue = false;
+        canChooseMove = true;
+       // }
+        //p1Dialogue = false;
     }
 
 
     IEnumerator p1Faint()
     {
+        yield return StartCoroutine(effectivenessText());
         yield return new WaitForSeconds(1f);
         dialogueText.text = "";
         dialogueText.text = p1Name + " fainted!";
         P1.textP1.text = "";
         p1sprite.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        setLossText();
 
         lowHP.FadeOut(1f);
+
   
     }
 
 
     IEnumerator p2Faint()
     {
-
+        yield return StartCoroutine(effectivenessText());
         yield return new WaitForSeconds(1f);
       
         dialogueText.text = "";
         dialogueText.text = "The foe's " + p2Name + " fainted!";
         P2.textP2.text = "";
         p2sprite.gameObject.SetActive(false);
-
-       
+        yield return new WaitForSeconds(1f);
         mainBGM.FadeOut(2f);
-
+        setVictoryText();
+        
+        
     }
 
-    IEnumerator lossText()
+/*    IEnumerator lossText()
     {
         yield return new WaitForSeconds(2f);
         dialogueText.text = "";
@@ -313,7 +358,7 @@ public class Battle : MonoBehaviour
         dialogueText.text = "";
         setVictoryText();
         // 
-    }
+    }*/
 
 
     public void setVictoryText()
@@ -335,21 +380,55 @@ public class Battle : MonoBehaviour
     IEnumerator p1Move()
     {
         p1Turn = true;
+        yield return StartCoroutine(effectivenessText());
         yield return new WaitForSeconds(1f);
         p1ChooseMove(p1Input);
-        
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(effectivenessText());
+        yield return new WaitForSeconds(1f);
+        if(p2Alive)
+        {
+            p1DialogueText();
+        }
+       
+
+        //enemy effectiveness
+        /*        yield return StartCoroutine(effectivenessText());
+                yield return new WaitForSeconds(1f);
+                p1DialogueText();*/
+
+
+
+
     }
 
     IEnumerator enemyMove()
     {
         // p1Turn = false;
         p2Turn = true;
-      //  yield return new WaitUntil(() => effectText == true);
+        yield return StartCoroutine(effectivenessText());
+        //  yield return new WaitUntil(() => effectText == true);
         yield return new WaitForSeconds(1f);
         enemyRandomMove = Random.Range(0, 3);
         enemyChooseMove(enemyRandomMove);
-       
- 
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(effectivenessText());
+        yield return new WaitForSeconds(1f);
+        if(p1Alive)
+        {
+            p1DialogueText();
+
+        }
+   
+        //p1 effectiveness
+        /*        
+
+                p1DialogueText();*/
+        //p1dialogueText
+        /*yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(p1DialogueText());*/
+
+
 
     }
 
@@ -369,40 +448,45 @@ public class Battle : MonoBehaviour
 
     public void chooseMove(int input)
     {
-
-        enemyRandomMove = Random.Range(0, 3);
-        p1Input = input;
-
-        if (P1.statsGlobalP1[5].base_stat > P2.statsGlobalP2[5].base_stat)
+        if (canChooseMove && P2HealthBarSource.sliderP2.value != 0 && P1HealthBarSource.sliderP1.value != 0)
         {
-            p1Turn = true;
-            p2Turn = false;
-            p1ChooseMove(input);
-        }
-        else if(P1.statsGlobalP1[5].base_stat < P2.statsGlobalP2[5].base_stat)
-        {
-            p2Turn = true;
-            p1Turn = false;
-            enemyChooseMove(enemyRandomMove);
-        }
 
-        else
-        {
-            int speedTie = Random.Range(0,1);
-            if (speedTie == 0)
+            enemyRandomMove = Random.Range(0, 3);
+            p1Input = input;
+
+            if (P1.statsGlobalP1[5].base_stat > P2.statsGlobalP2[5].base_stat)
             {
                 p1Turn = true;
                 p2Turn = false;
                 p1ChooseMove(input);
-            } 
-            else
+            }
+            else if (P1.statsGlobalP1[5].base_stat < P2.statsGlobalP2[5].base_stat)
             {
                 p2Turn = true;
                 p1Turn = false;
                 enemyChooseMove(enemyRandomMove);
             }
-        }
 
+            else
+            {
+                int speedTie = Random.Range(0, 1);
+                if (speedTie == 0)
+                {
+                    p1Turn = true;
+                    p2Turn = false;
+                    p1ChooseMove(input);
+                }
+                else
+                {
+                    p2Turn = true;
+                    p1Turn = false;
+                    enemyChooseMove(enemyRandomMove);
+                }
+            }
+            canChooseMove = false;
+
+        }
+        
 
   //      return damageCalc;
 
@@ -410,8 +494,8 @@ public class Battle : MonoBehaviour
     public void enemyChooseMove(int input) //make it wait for moves to generate
     {
 
-        if (p2Turn && P2HealthBarSource.sliderP2.value != 0 && P1HealthBarSource.sliderP1.value != 0)
-        {
+/*        if (p2Turn && P2HealthBarSource.sliderP2.value != 0 && P1HealthBarSource.sliderP1.value != 0)
+        {*/
 
             string p2MoveCap = char.ToUpper(P2MovesSource.moveSetP2[input].name[0]) + P2MovesSource.moveSetP2[input].name.Substring(1);
             dialogueText.text = "";
@@ -433,7 +517,7 @@ public class Battle : MonoBehaviour
             if (accRandom > P2MovesSource.moveSetP2[input].accuracy)
             {
 
-                Debug.Log("P2: MISS");
+               // Debug.Log("P2: MISS");
                 moveMiss = true;
                 damageCalc = 0;
                 return;
@@ -443,12 +527,12 @@ public class Battle : MonoBehaviour
                 if (P2MovesSource.moveSetP2[input].damage_class.name == "physical")
                 {
                     damageCalc = ((((int)enemyPower * (enemyAttack / targetDefense) * 10) / 50) * calcRandom) / 100;
-                    Debug.Log("p2: PHYS");
+                    //Debug.Log("p2: PHYS");
                 }
                 else
                 {
                     damageCalc = ((((int)enemyPower * (enemySpAttack / targetSpDefense) * 10) / 50) * calcRandom) / 100;
-                    Debug.Log("p2: SP");
+                   // Debug.Log("p2: SP");
                 }
 
             }
@@ -492,26 +576,26 @@ public class Battle : MonoBehaviour
             }
 
 
-            damageResultP2 = damageCalc;
+        damageResultP2 =  damageCalc;
             Mathf.Floor((float)damageResultP2);
 
             effectText = false;
 
-            Debug.Log("P2 DAMAGE: " + damageResultP2);
+            //Debug.Log("P2 DAMAGE: " + damageResultP2);
 
             //p1Turn = true;
 
 
             //        return damageCalc;
-        }
+        //}
     }
 
 
     public void p1ChooseMove(int input)
     {
-
+/*
         if (p1Turn && P2HealthBarSource.sliderP2.value != 0 && P1HealthBarSource.sliderP1.value != 0)
-        {
+        {*/
             //check for speed here
             string p1MoveCap = char.ToUpper(P1MovesSource.moveSetP1[input].name[0]) + P1MovesSource.moveSetP1[input].name.Substring(1);
             dialogueText.text = "";
@@ -538,7 +622,7 @@ public class Battle : MonoBehaviour
             if(accRandom > P1MovesSource.moveSetP1[input].accuracy) 
             {
 
-                Debug.Log("P1: MISS");
+                //Debug.Log("P1: MISS");
                 moveMiss = true;
                 damageCalc = 0;
                 return;
@@ -548,13 +632,13 @@ public class Battle : MonoBehaviour
                 if(P1MovesSource.moveSetP1[input].damage_class.name == "physical") 
                 {
                     damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10) / 50) * calcRandom) / 100;
-                    Debug.Log("p1: PHYS");
+                    //Debug.Log("p1: PHYS");
                 }
                 
                 else
                 {
                     damageCalc = ((((int)playerPower * (playerSpAttack / targetSpDefense) * 10) / 50) * calcRandom) / 100;
-                    Debug.Log("p1: SP");
+                   // Debug.Log("p1: SP");
                 }
             }
 
@@ -576,12 +660,12 @@ public class Battle : MonoBehaviour
             damageCalc = stabCalc(damageCalc, p2Types, P1MovesSource.moveSetP1[input].type.name);
 
             damageResultP1 = damageCalc;
-
+    
             Mathf.Floor((float)damageResultP1);
 
-            Debug.Log("P1 DAMAGE: " + damageResultP1);
+            //Debug.Log("P1 DAMAGE: " + damageResultP1);
 
-        }
+    //    }
     }
 
 
@@ -686,29 +770,29 @@ public class Battle : MonoBehaviour
         //check which type of Effectiveness
         if(beforeDamageCalc * 2 == damageCalc || beforeDamageCalc * 4 == damageCalc)
         {
-            superEffective = true;
+            superEffectiveSound = true;
         }
         else if (beforeDamageCalc * 0.5 == damageCalc || beforeDamageCalc * 0.25 == damageCalc)
         {
-            notEffective = true;
+            notEffectiveSound = true;
         }
         else if (beforeDamageCalc == damageCalc)
         {
-            normalEffect = true;
+            normalEffectSound = true;
         }
         else if(damageCalc == 0)
         {
-            noEffect = true;
+            noEffectSound = true;
 /*            superEffective = false;
             notEffective = false;
             normalEffect = false;*/
         }
         else
         {
-            noEffect = false;
-            superEffective = false;
-            notEffective = false;
-            normalEffect = false;
+            noEffectSound = false;
+            superEffectiveSound = false;
+            notEffectiveSound = false;
+            normalEffectSound = false;
 
         }
         //Debug.Log("After Calcs: " + damageCalc);

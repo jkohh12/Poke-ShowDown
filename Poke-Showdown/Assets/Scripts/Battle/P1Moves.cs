@@ -204,14 +204,6 @@ public class P1Moves : MonoBehaviour
 
     }
 
-    /*    private void Start()
-        {
-            for(int i = 0; i < pokemon.movesGlobal.Count; i++)
-            {
-                StartCoroutine(GetRequest("https://pokeapi.co/api/v2/move/" + pokemon.movesGlobal[i].move.name));
-            }
-
-        }*/
     private IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))

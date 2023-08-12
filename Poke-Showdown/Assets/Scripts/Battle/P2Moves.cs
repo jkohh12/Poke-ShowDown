@@ -190,13 +190,8 @@ public class P2Moves : MonoBehaviour
 
     private void Start()
     {
-      
-        setUpMoveP2();
 
-    }
-
-    public void setUpMoveP2()
-    {
+        //for multiple pokemon //setUpMoveP2();
         moveCounterP2 = 0;
         moveSetP2 = new List<moveStats>();
         movePoolAttackP2 = new List<moveStats>();
@@ -208,6 +203,11 @@ public class P2Moves : MonoBehaviour
 
     }
 
+/*    public void setUpMoveP2()
+    {
+
+    }
+*/
 /*    private void Start()
     {
         for(int i = 0; i < pokemon.movesGlobal.Count; i++)

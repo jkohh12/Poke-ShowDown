@@ -19,28 +19,28 @@ public class p2Sprite : MonoBehaviour
     void Start()
     {
 
-        setUpSpriteP2();
-
-
-    }
-
-
-    public void setUpSpriteP2()
-    {
+        //use for multiple pokemon // setUpSpriteP2(); 
         randNum = pokeStatus.randNumberP2;
-/*        string newRandNum = randNum.ToString();
-        if (randNum < 10)
-        {
-            newRandNum = "00" + randNum.ToString();
-        }
-        else if (randNum < 100)
-        {
-            newRandNum = "0" + randNum.ToString();
-        }*/
+        /*        string newRandNum = randNum.ToString();
+                if (randNum < 10)
+                {
+                    newRandNum = "00" + randNum.ToString();
+                }
+                else if (randNum < 100)
+                {
+                    newRandNum = "0" + randNum.ToString();
+                }*/
         //Debug.Log(randNum);
         AsyncOperationHandle<Sprite[]> spriteHandle = Addressables.LoadAssetAsync<Sprite[]>("Assets/PokeSprites/FRONT/" + randNum + ".png");
         spriteHandle.Completed += LoadSpritesWhenReady;
+
     }
+
+/*
+    public void setUpSpriteP2()
+    {
+
+    }*/
     private void LoadSpritesWhenReady(AsyncOperationHandle<Sprite[]> handleToCheck)
     {
         if (handleToCheck.Status == AsyncOperationStatus.Succeeded)
@@ -63,7 +63,7 @@ public class p2Sprite : MonoBehaviour
             currentSprite = 0;
             spriteRenderer.sprite = spriteArrayP2[currentSprite];
         }
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.08f);
 
         StartCoroutine(UpdateAnimation());
     }
