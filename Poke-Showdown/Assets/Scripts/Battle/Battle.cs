@@ -23,6 +23,8 @@ public class Battle : MonoBehaviour
 
     [SerializeField] private TypeEffectiveness typeEffectiveness;
 
+    [SerializeField] SimpleFlash flashEffP1;
+    [SerializeField] SimpleFlash flashEffP2;
 
 
     [Header("Audio")]
@@ -145,7 +147,10 @@ public class Battle : MonoBehaviour
 
 
         if (actionCounterP1 < (float)damageResultP1 && P1HealthBarSource.sliderP1.value != 0)
-        { 
+        {
+     
+            flashEffP2.Flash();
+            
 
             P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 1f);
             actionCounterP1 += 1f;
@@ -167,11 +172,14 @@ public class Battle : MonoBehaviour
 
         if (actionCounterP2 < (float)damageResultP2)
         {
+ 
+            flashEffP1.Flash();
+            
             P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 1f);
             actionCounterP2 += 1f;
             if(actionCounterP2 >= (float)damageResultP2)
             {
-
+              
                 actionCounterP2 = 0;
                 damageResultP2 = 0;
                 if(P1HealthBarSource.sliderP1.value != 0 && !p1Turn)
@@ -193,9 +201,7 @@ public class Battle : MonoBehaviour
         {
             p2Alive = false;
             StartCoroutine(p2Faint());
-            
-            
-
+           
 
         }
 
@@ -204,7 +210,7 @@ public class Battle : MonoBehaviour
         {
             p1Alive = false;
             StartCoroutine(p1Faint());
-          
+       
         }
 
         //
