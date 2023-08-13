@@ -65,8 +65,8 @@ public class Battle : MonoBehaviour
     private bool normalEffect = false;
     private bool noEffect = false;
 
-    private bool moveMiss = false;
-
+    private bool moveMissP1 = false;
+    private bool moveMissP2 = false;
 
 
     private bool canChooseMove = true;
@@ -125,16 +125,20 @@ public class Battle : MonoBehaviour
         }
 
         //TODO: Fix move miss and no effect
-        if (noEffectSound && !p2Turn || moveMiss && !p2Turn)
+        if (noEffectSound && !p2Turn || moveMissP1 && !p2Turn)
         {
-            moveMiss = false;
-            StartCoroutine(enemyMove());
+            Debug.Log("NO EFFECT");
             
+            StartCoroutine(enemyMove());
+            moveMissP1 = false;
+
         }
-        else if(noEffectSound && !p1Turn || moveMiss && !p1Turn)
+        if(noEffectSound && !p1Turn || moveMissP2 && !p1Turn)
         {
-            moveMiss = false;
+            Debug.Log("NO EFFECT");
+            
             StartCoroutine(p1Move());
+            moveMissP2 = false;
         }
 
 
@@ -237,6 +241,21 @@ public class Battle : MonoBehaviour
             dialogueText.text = "It has no effect";
             Debug.Log("WE TO HERE");
             noEffect = false;
+        }
+        else if (moveMissP1) 
+        {
+            yield return new WaitForSeconds(1f);
+            dialogueText.text = "";
+            dialogueText.text = P1.textP1.text + " missed!";
+            moveMissP1 = false;
+
+        }
+        else if (moveMissP2)
+        {
+            yield return new WaitForSeconds(1f);
+            dialogueText.text = "";
+            dialogueText.text = "The foe's " + P2.textP2.text + " missed!";
+            moveMissP2 = false;
         }
         else
         {
@@ -356,8 +375,9 @@ public class Battle : MonoBehaviour
 
     IEnumerator playLowHP()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         lowHP.Play();
+  
 
     }
 
@@ -428,11 +448,14 @@ public class Battle : MonoBehaviour
             int accRandom = Random.Range(1, 100);
 
             double damageCalc;
+
+       // Debug.Log("randomP2" + accRandom);
+
             if (accRandom > P2MovesSource.moveSetP2[input].accuracy)
             {
 
-               // Debug.Log("P2: MISS");
-                moveMiss = true;
+                //Debug.Log("P2: MISS");
+                moveMissP2 = true;
                 damageCalc = 0;
                 return;
             }
@@ -478,7 +501,7 @@ public class Battle : MonoBehaviour
             if (currentHealth / targetHealth <= 0.160 && currentHealth / targetHealth > 0) //normalize percent value?
             {
 
-                mainBGM.FadeOut(1f);
+                mainBGM.FadeOut(0.5f);
                 StartCoroutine(playLowHP());
             }
 
@@ -517,11 +540,13 @@ public class Battle : MonoBehaviour
 
             //accuracy
             double damageCalc;
-            if(accRandom > P1MovesSource.moveSetP1[input].accuracy) 
+
+       // Debug.Log("P1 rand:" + accRandom);
+            if (accRandom > P1MovesSource.moveSetP1[input].accuracy) 
             {
 
-                //Debug.Log("P1: MISS");
-                moveMiss = true;
+                Debug.Log("P1: MISS");
+                moveMissP1 = true;
                 damageCalc = 0;
                 return;
             }

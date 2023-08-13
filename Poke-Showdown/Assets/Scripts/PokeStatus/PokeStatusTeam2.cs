@@ -19,6 +19,8 @@ public class PokeStatusTeam2 : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] public P2HealthBar p2Health;
+
+    [SerializeField] AudioSource LUGIA;
     public class Ability
     {
         public Ability ability { get; set; }
@@ -433,6 +435,10 @@ public class PokeStatusTeam2 : MonoBehaviour
     {
         //use for multiple pokemon // setUpPokemonP2();
         randNumberP2 = Random.Range(1, 650);
+        if(randNumberP2 == 249)
+        {
+            LUGIA.Play();
+        }
         // Debug.Log(randNumberP2);
         StartCoroutine(GetRequest("https://pokeapi.co/api/v2/pokemon/" + randNumberP2.ToString()));
     }
