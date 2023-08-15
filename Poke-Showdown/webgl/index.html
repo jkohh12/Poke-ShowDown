@@ -24,7 +24,23 @@
       height: 100px;
       font-family: 'Press Start 2P', cursive;
       font-size: 20pt;
+      box-shadow: inset -4px -4px #adafbc;
     }
+
+    button:hover {
+      box-shadow: inset -6px -6px #adafbc;
+      background-color: rgb(230, 230, 230);
+    }
+
+    button:active {
+      box-shadow: inset 6px 6px #adafbc;
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+
 
     .marg {
       margin-right: 30px;
@@ -50,6 +66,199 @@
       background-image: url("https://media.discordapp.net/attachments/763614696229044234/1135723766429786264/1644597.jpg?width=1920&height=1080");
     }
 
+    .move {
+      margin: 0;
+      width: 100px;
+      height: 40px;
+      font-size: 8pt;
+      text-align: center;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-self: center;
+    
+    }
+
+    .flextype {
+      display: flex;
+      justify-content: center;
+    }
+
+    .Normal {
+      background-color: rgb(170,170,153);
+      color: white;
+    }
+
+    .Fire {
+      background-color: rgb(255,68,34);
+      color: white;
+    }
+
+    .Water {
+      background-color: rgb(51,153,255);
+      color: white;
+    }
+
+    .Electric {
+      background-color: rgb(255,204,51);
+      color: white;
+    }
+
+    .Grass {
+      background-color: rgb(119,204,85);
+      color: white;
+    }
+
+    .Ice {
+      background-color: rgb(102,204,255);
+      color: white;
+    }
+
+    .Fighting {
+      background-color: rgb(187,85,68);
+      color: white;
+    }
+
+    .Poison {
+      background-color: rgb(170,85,153);
+      color: white;
+    }
+
+    .Ground {
+      background-color: rgb(221,187,85);
+      color: white;
+    }
+
+    .Flying {
+      background-color: rgb(136,153,255);
+      color: white;
+    }
+
+    .Psychic {
+      background-color: rgb(255,85,153);
+      color: white;
+    }
+
+    .Bug {
+      background-color: rgb(170,187,34);
+      color: white;
+    }
+
+    .Rock {
+      background-color: rgb(187,170,102);
+      color: white;
+    }
+
+    .Ghost {
+      background-color: rgb(102,102,187);
+      color: white;
+    }
+
+    .Dragon {
+      background-color: rgb(119,102,238);
+      color: white;
+    }
+
+    .Dark {
+      background-color: rgb(119,85,68);
+      color: white;
+    }
+
+    .Steel {
+      background-color: rgb(170,170,187);
+      color: white;
+    }
+
+    .Fairy {
+      background-color: rgb(238,153,238);
+      color: white;
+    }
+
+    .Normalbutton {
+      border: inset rgb(170,170,153) 5px;
+      
+    }
+
+    .Firebutton {
+      border: inset rgb(255,68,34) 5px;
+      
+    }
+
+    .Waterbutton {
+      border: inset rgb(51,153,255) 5px;
+      
+    }
+
+    .Electricbutton {
+      border: inset rgb(255,204,51) 5px;
+      
+    }
+
+    .Grassbutton {
+      border: inset rgb(119,204,85) 5px;
+      
+    }
+
+    .Icebutton {
+      border: inset rgb(102,204,255) 5px;
+      
+    }
+
+    .Fightingbutton {
+      border: inset rgb(187,85,68) 5px;
+      
+    }
+
+    .Poisonbutton {
+      border: inset rgb(170,85,153) 5px;
+      
+    }
+
+    .Groundbutton {
+      border: inset rgb(221,187,85) 5px;
+      
+    }
+
+    .Flyingbutton {
+      border: inset rgb(136,153,255) 5px;
+      
+    }
+
+    .Psychicbutton {
+      border: inset rgb(255,85,153) 5px;
+      
+    }
+
+    .Bugbutton {
+      border: inset rgb(170,187,34) 5px;
+      
+    }
+
+    .Rockbutton {
+      border: inset rgb(187,170,102) 5px;
+    }
+
+    .Ghostbutton {
+      border: inset rgb(102,102,187) 5px;
+    }
+
+    .Dragonbutton {
+      border: inset rgb(119,102,238) 5px;
+    }
+
+    .Darkbutton {
+      border: inset rgb(119,85,68) 5px;
+    }
+
+    .Steelbutton {
+      border: inset rgb(170,170,187) 5px;
+    }
+
+    .Fairybutton {
+      border: inset rgb(238,153,238) 5px;
+    }
+
+
   </style>
   
   
@@ -68,10 +277,40 @@
     </div>
     <div class="cont">
       <div class="flex">
-          <button class='nes-btn button is-primary' id="move1">Move 1</button>
-          <button class='nes-btn button is-primary' id="move2">Move 2</button>
-          <button class='nes-btn button is-primary' id="move3">Move 3</button>
-          <button class='nes-btn button is-primary' id="move4">Move 4</button>
+          <button class='button' id="move1">
+            Move 1
+            <div class="flextype">
+              <div id="type1" class="move">
+              
+              </div>
+            </div>
+          </button>
+          <button class='button' id="move2">
+            Move 2
+            <div class="flextype">
+              <div id="type2" class="move">
+                type 2
+              </div>
+            </div>
+            
+          </button>
+          <button class='button' id="move3">
+            Move 3
+            <div class="flextype">
+              <div id="type3" class="move">
+                type 3
+              </div>
+            </div>
+          </button>
+          <button class='button' id="move4">
+            Move 4
+            <div class="flextype">
+              <div id="type4" class="move">
+                type 4
+              </div>
+            </div>
+            
+          </button>
       </div>
     </div>
     </div>
@@ -90,6 +329,10 @@
     var move2 = document.querySelector("#move2");
     var move3 = document.querySelector("#move3");
     var move4 = document.querySelector("#move4");
+    var type1 = document.querySelector("#type1");
+    var type2 = document.querySelector("#type2");
+    var type3 = document.querySelector("#type3");
+    var type4 = document.querySelector("#type4");
 
     // Shows a temporary message banner/ribbon for a few seconds, or
     // a permanent error message on top of the canvas if type=='error'.
