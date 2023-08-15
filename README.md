@@ -17,10 +17,10 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 * Fully Functioning Health Bar. (Changes Gradient Depending on Health Value)
 * Fully Animated Sprites for each Pokemon. (WIP)
 * Type Effectiveness and Damage calculations. (SuperEffective, NotEffective, NoEffect)
-* Move Miss/Speed Calc.
+* Move Miss/Speed Calculation.
+* Critical Damage Calculation.
 * SpAttack/PhysAttack distinction.
 * Functioning Dialogue Box, similar to dialogue box seen in Pokemon Series.
-* Functionality in Browser, with Web Development.
 * Battle Music.
 * Low HP music.
 * Victory Music.
