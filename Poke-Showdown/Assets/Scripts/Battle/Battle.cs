@@ -568,7 +568,7 @@ public class Battle : MonoBehaviour
         if (currentHealth / targetHealth <= 0.160 && currentHealth / targetHealth > 0) //normalize percent value?
         {
 
-            mainBGM.FadeOut(0.5f);
+            mainBGM.FadeOut(1f);
             StartCoroutine(playLowHP());
         }
 
