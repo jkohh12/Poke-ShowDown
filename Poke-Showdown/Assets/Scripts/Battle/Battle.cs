@@ -23,6 +23,8 @@ public class Battle : MonoBehaviour
 
     [SerializeField] private TypeEffectiveness typeEffectiveness;
 
+    [SerializeField] SimpleFlash flashEffP1;
+    [SerializeField] SimpleFlash flashEffP2;
 
 
     [Header("Audio")]
@@ -64,6 +66,8 @@ public class Battle : MonoBehaviour
     private bool notEffective = false;
     private bool normalEffect = false;
     private bool noEffect = false;
+
+    private bool critHit = false;
 
     private bool moveMissP1 = false;
     private bool moveMissP2 = false;
@@ -143,7 +147,10 @@ public class Battle : MonoBehaviour
 
 
         if (actionCounterP1 < (float)damageResultP1 && P1HealthBarSource.sliderP1.value != 0)
-        { 
+        {
+     
+            flashEffP2.Flash();
+            
 
             P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 1f);
             actionCounterP1 += 1f;
@@ -165,11 +172,14 @@ public class Battle : MonoBehaviour
 
         if (actionCounterP2 < (float)damageResultP2)
         {
+ 
+            flashEffP1.Flash();
+            
             P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 1f);
             actionCounterP2 += 1f;
             if(actionCounterP2 >= (float)damageResultP2)
             {
-
+              
                 actionCounterP2 = 0;
                 damageResultP2 = 0;
                 if(P1HealthBarSource.sliderP1.value != 0 && !p1Turn)
@@ -191,9 +201,7 @@ public class Battle : MonoBehaviour
         {
             p2Alive = false;
             StartCoroutine(p2Faint());
-            
-            
-
+           
 
         }
 
@@ -202,7 +210,7 @@ public class Battle : MonoBehaviour
         {
             p1Alive = false;
             StartCoroutine(p1Faint());
-          
+       
         }
 
         //
@@ -214,14 +222,12 @@ public class Battle : MonoBehaviour
     {
 
         //TODO: Rework 
-        Debug.Log("GOT TO HERE");
-        
+  
         if (superEffective)
         {
             yield return new WaitForSeconds(1f);
             dialogueText.text = "";
             dialogueText.text = "It's super effective!";
-            Debug.Log("WE TO HERE");
             superEffective = false;
 
         }
@@ -230,8 +236,7 @@ public class Battle : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             dialogueText.text = "";
-            dialogueText.text = "It's not very effective...";
-            Debug.Log("WE TO HERE");
+            dialogueText.text = "It's not very effective..."; 
             notEffective = false;
         }
         else if (noEffect)
@@ -239,7 +244,7 @@ public class Battle : MonoBehaviour
             yield return new WaitForSeconds(1f);
             dialogueText.text = "";
             dialogueText.text = "It has no effect";
-            Debug.Log("WE TO HERE");
+           
             noEffect = false;
         }
         else if (moveMissP1) 
@@ -259,7 +264,6 @@ public class Battle : MonoBehaviour
         }
         else
         {
-            Debug.Log("WE TO HERE");
             normalEffect = false;
         }
 
@@ -273,6 +277,16 @@ public class Battle : MonoBehaviour
 
     }
 
+    IEnumerator critHitText()
+    {
+        if(critHit)
+        {
+            yield return new WaitForSeconds(1f);
+            dialogueText.text = "";
+            dialogueText.text = "A critical hit!";
+            critHit = false;
+        }
+    }
     public void p1DialogueText()
     {
 
@@ -284,6 +298,13 @@ public class Battle : MonoBehaviour
 
     IEnumerator p1Faint()
     {
+        if(critHit)
+        {
+          //  yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(critHitText());
+            
+        }
+
         yield return StartCoroutine(effectivenessText());
         yield return new WaitForSeconds(1f);
         dialogueText.text = "";
@@ -303,9 +324,15 @@ public class Battle : MonoBehaviour
 
     IEnumerator p2Faint()
     {
+        if(critHit)
+        {
+          //  yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(critHitText());
+            
+        }
+
         yield return StartCoroutine(effectivenessText());
         yield return new WaitForSeconds(1f);
-      
         dialogueText.text = "";
         dialogueText.text = "The foe's " + p2Name + " fainted!";
         P2.textP2.text = "";
@@ -340,9 +367,21 @@ public class Battle : MonoBehaviour
     IEnumerator p1Move()
     {
         p1Turn = true;
+        if(critHit)
+        {
+  
+            yield return StartCoroutine(critHitText());
+           
+        }
+
         yield return StartCoroutine(effectivenessText());
         yield return new WaitForSeconds(1f);
         p1ChooseMove(p1Input);
+        if (critHit)
+        {
+            yield return StartCoroutine(critHitText());
+            
+        }
         yield return new WaitForSeconds(0.5f);
         yield return StartCoroutine(effectivenessText());
         yield return new WaitForSeconds(1f);
@@ -357,11 +396,22 @@ public class Battle : MonoBehaviour
     {
         // p1Turn = false;
         p2Turn = true;
+        if(critHit)
+        {
+     
+            yield return StartCoroutine(critHitText());
+            
+        }
         yield return StartCoroutine(effectivenessText());
-        //  yield return new WaitUntil(() => effectText == true);
         yield return new WaitForSeconds(1f);
         enemyRandomMove = Random.Range(0, 3);
         enemyChooseMove(enemyRandomMove);
+        if (critHit)
+        {
+ 
+            yield return StartCoroutine(critHitText());
+            
+        }
         yield return new WaitForSeconds(0.5f);
         yield return StartCoroutine(effectivenessText());
         yield return new WaitForSeconds(1f);
@@ -431,83 +481,100 @@ public class Battle : MonoBehaviour
     {
 
 
-            string p2MoveCap = char.ToUpper(P2MovesSource.moveSetP2[input].name[0]) + P2MovesSource.moveSetP2[input].name.Substring(1);
-            dialogueText.text = "";
-            dialogueText.text = "The foe's " + P2.textP2.text + " used " + p2MoveCap + "!";
-            int? enemyPower = P2MovesSource.moveSetP2[input].power;
-            float targetHealth = P1.statsGlobalP1[0].base_stat;
+        string p2MoveCap = char.ToUpper(P2MovesSource.moveSetP2[input].name[0]) + P2MovesSource.moveSetP2[input].name.Substring(1);
+        dialogueText.text = "";
+        dialogueText.text = "The foe's " + P2.textP2.text + " used " + p2MoveCap + "!";
+        int? enemyPower = P2MovesSource.moveSetP2[input].power;
+        float targetHealth = P1.statsGlobalP1[0].base_stat;
 
 
-            float enemyAttack = P2.statsGlobalP2[1].base_stat;
-            float enemySpAttack = P2.statsGlobalP2[3].base_stat;
+        float enemyAttack = P2.statsGlobalP2[1].base_stat;
+        float enemySpAttack = P2.statsGlobalP2[3].base_stat;
 
-            float targetDefense = P2.statsGlobalP2[2].base_stat;
-            float targetSpDefense = P2.statsGlobalP2[4].base_stat;
+        float targetDefense = P2.statsGlobalP2[2].base_stat;
+        float targetSpDefense = P2.statsGlobalP2[4].base_stat;
 
-            int calcRandom = Random.Range(80, 100);
-            int accRandom = Random.Range(1, 100);
+        int calcRandom = Random.Range(80, 100);
+        int accRandom = Random.Range(1, 100);
 
-            double damageCalc;
+        double damageCalc;
 
-       // Debug.Log("randomP2" + accRandom);
+    // Debug.Log("randomP2" + accRandom);
 
-            if (accRandom > P2MovesSource.moveSetP2[input].accuracy)
+        if (accRandom > P2MovesSource.moveSetP2[input].accuracy)
+        {
+
+            //Debug.Log("P2: MISS");
+            moveMissP2 = true;
+            damageCalc = 0;
+            return;
+        }
+        else
+        {
+            if (P2MovesSource.moveSetP2[input].damage_class.name == "physical")
             {
-
-                //Debug.Log("P2: MISS");
-                moveMissP2 = true;
-                damageCalc = 0;
-                return;
+                damageCalc = ((((int)enemyPower * (enemyAttack / targetDefense) * 10) / 50) * calcRandom) / 100;
+                //Debug.Log("p2: PHYS");
             }
             else
             {
-                if (P2MovesSource.moveSetP2[input].damage_class.name == "physical")
-                {
-                    damageCalc = ((((int)enemyPower * (enemyAttack / targetDefense) * 10) / 50) * calcRandom) / 100;
-                    //Debug.Log("p2: PHYS");
-                }
-                else
-                {
-                    damageCalc = ((((int)enemyPower * (enemySpAttack / targetSpDefense) * 10) / 50) * calcRandom) / 100;
-                   // Debug.Log("p2: SP");
-                }
-
+                damageCalc = ((((int)enemyPower * (enemySpAttack / targetSpDefense) * 10) / 50) * calcRandom) / 100;
+                // Debug.Log("p2: SP");
             }
+                
+
+        }
+
+        //crit
+        int critRand = Random.Range(1, 100);
+        Debug.Log(critRand);
+        if (critRand < 7)
+        {
+            
+            damageCalc = damageCalc * 1.5;
+            critHit = true;
+     
+                
+        }
 
 
-            List<string> p1Types = new List<string>();
-            if (P1.typeGlobalP1.Count == 2)
-            {
-                p1Types.Add(P1.typeGlobalP1[0].type.name);
-                p1Types.Add(P1.typeGlobalP1[1].type.name);
+        List<string> p1Types = new List<string>();
+        if (P1.typeGlobalP1.Count == 2)
+        {
+            p1Types.Add(P1.typeGlobalP1[0].type.name);
+            p1Types.Add(P1.typeGlobalP1[1].type.name);
 
-            }
-            else
-            {
-                p1Types.Add(P1.typeGlobalP1[0].type.name);
+        }
+        else
+        {
+            p1Types.Add(P1.typeGlobalP1[0].type.name);
 
-            }
-
-            damageCalc = effectivenessCalc(damageCalc, input, P2MovesSource.moveSetP2[input].type.name, p1Types);
-
-            //STAB
-            damageCalc = stabCalc(damageCalc, p1Types, P2MovesSource.moveSetP2[input].type.name);
+        }
 
 
-
-            currentHealth = currentHealth - (float)damageCalc;
-
-
-            if (currentHealth / targetHealth <= 0.160 && currentHealth / targetHealth > 0) //normalize percent value?
-            {
-
-                mainBGM.FadeOut(0.5f);
-                StartCoroutine(playLowHP());
-            }
+          
 
 
-            damageResultP2 = damageCalc;
-            Mathf.Floor((float)damageResultP2);
+        damageCalc = effectivenessCalc(damageCalc, input, P2MovesSource.moveSetP2[input].type.name, p1Types);
+
+        //STAB
+        damageCalc = stabCalc(damageCalc, p1Types, P2MovesSource.moveSetP2[input].type.name);
+
+
+
+        currentHealth = currentHealth - (float)damageCalc;
+
+
+        if (currentHealth / targetHealth <= 0.160 && currentHealth / targetHealth > 0) //normalize percent value?
+        {
+
+            mainBGM.FadeOut(1f);
+            StartCoroutine(playLowHP());
+        }
+
+
+        damageResultP2 = damageCalc;
+        Mathf.Floor((float)damageResultP2);
 
 
 
@@ -517,76 +584,91 @@ public class Battle : MonoBehaviour
     public void p1ChooseMove(int input)
     {
 
-            //check for speed here
-            string p1MoveCap = char.ToUpper(P1MovesSource.moveSetP1[input].name[0]) + P1MovesSource.moveSetP1[input].name.Substring(1);
-            dialogueText.text = "";
-            dialogueText.text = P1.textP1.text + " used " + p1MoveCap + "!";
+        //check for speed here
+        string p1MoveCap = char.ToUpper(P1MovesSource.moveSetP1[input].name[0]) + P1MovesSource.moveSetP1[input].name.Substring(1);
+        dialogueText.text = "";
+        dialogueText.text = P1.textP1.text + " used " + p1MoveCap + "!";
 
-            int? playerPower = P1MovesSource.moveSetP1[input].power;
-            float targetHealth = P2.statsGlobalP2[0].base_stat;
+        int? playerPower = P1MovesSource.moveSetP1[input].power;
+        float targetHealth = P2.statsGlobalP2[0].base_stat;
 
-            //Attacks
-            float playerAttack = P1.statsGlobalP1[1].base_stat;
-            float playerSpAttack = P1.statsGlobalP1[3].base_stat;
+        //Attacks
+        float playerAttack = P1.statsGlobalP1[1].base_stat;
+        float playerSpAttack = P1.statsGlobalP1[3].base_stat;
             
-            //Defenses
-            float targetDefense = P2.statsGlobalP2[2].base_stat;
-            float targetSpDefense = P2.statsGlobalP2[4].base_stat;
+        //Defenses
+        float targetDefense = P2.statsGlobalP2[2].base_stat;
+        float targetSpDefense = P2.statsGlobalP2[4].base_stat;
 
-            int calcRandom = Random.Range(80, 100);
-            int accRandom = Random.Range(1, 100);
+        int calcRandom = Random.Range(80, 100);
+        int accRandom = Random.Range(1, 100);
 
-            //normal effect, 2x super effective, 4x super effective, 0.5 not effective, 0.25 not effective, no effect
+        //normal effect, 2x super effective, 4x super effective, 0.5 not effective, 0.25 not effective, no effect
 
-            //accuracy
-            double damageCalc;
+        //accuracy
+        double damageCalc;
 
-       // Debug.Log("P1 rand:" + accRandom);
-            if (accRandom > P1MovesSource.moveSetP1[input].accuracy) 
+         // Debug.Log("P1 rand:" + accRandom);
+        if (accRandom > P1MovesSource.moveSetP1[input].accuracy) 
+        {
+
+          //  Debug.Log("P1: MISS");
+            moveMissP1 = true;
+            damageCalc = 0;
+            return;
+        }
+        else
+        {
+            if(P1MovesSource.moveSetP1[input].damage_class.name == "physical") 
             {
-
-                Debug.Log("P1: MISS");
-                moveMissP1 = true;
-                damageCalc = 0;
-                return;
+                damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10) / 50) * calcRandom) / 100;
+                //Debug.Log("p1: PHYS");
             }
-            else
-            {
-                if(P1MovesSource.moveSetP1[input].damage_class.name == "physical") 
-                {
-                    damageCalc = ((((int)playerPower * (playerAttack / targetDefense) * 10) / 50) * calcRandom) / 100;
-                    //Debug.Log("p1: PHYS");
-                }
                 
-                else
-                {
-                    damageCalc = ((((int)playerPower * (playerSpAttack / targetSpDefense) * 10) / 50) * calcRandom) / 100;
-                   // Debug.Log("p1: SP");
-                }
-            }
-
-            List<string> p2Types = new List<string>();
-            if (P2.typeGlobalP2.Count == 2)
-            {
-                p2Types.Add(P2.typeGlobalP2[0].type.name);
-                p2Types.Add(P2.typeGlobalP2[1].type.name);
-
-            }
             else
             {
-                p2Types.Add(P2.typeGlobalP2[0].type.name);
+                damageCalc = ((((int)playerPower * (playerSpAttack / targetSpDefense) * 10) / 50) * calcRandom) / 100;
+                // Debug.Log("p1: SP");
             }
+        }
 
-            damageCalc = effectivenessCalc(damageCalc, input, P1MovesSource.moveSetP1[input].type.name, p2Types);
+        //crit
+        int critRand = Random.Range(1, 100);
+        Debug.Log(critRand);
+        if (critRand < 7)
+        {
+            
+            damageCalc = damageCalc * 1.5;
 
-            //STAB
-            damageCalc = stabCalc(damageCalc, p2Types, P1MovesSource.moveSetP1[input].type.name);
+            critHit = true;
 
-            damageResultP1 = damageCalc;
+            //StartCoroutine(critHitText());
+
+
+        }
+
+        List<string> p2Types = new List<string>();
+        if (P2.typeGlobalP2.Count == 2)
+        {
+            p2Types.Add(P2.typeGlobalP2[0].type.name);
+            p2Types.Add(P2.typeGlobalP2[1].type.name);
+
+        }
+        else
+        {
+            p2Types.Add(P2.typeGlobalP2[0].type.name);
+        }
+
+        damageCalc = effectivenessCalc(damageCalc, input, P1MovesSource.moveSetP1[input].type.name, p2Types);
+
+        //STAB
+        damageCalc = stabCalc(damageCalc, p2Types, P1MovesSource.moveSetP1[input].type.name);
+
+        damageResultP1 = damageCalc;
     
-            Mathf.Floor((float)damageResultP1);
+        Mathf.Floor((float)damageResultP1);
 
-            //Debug.Log("P1 DAMAGE: " + damageResultP1);
+        //Debug.Log("P1 DAMAGE: " + damageResultP1);
 
     }
 

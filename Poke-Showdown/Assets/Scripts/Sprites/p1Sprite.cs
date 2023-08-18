@@ -7,6 +7,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class p1Sprite : MonoBehaviour
 {
+
+  
     [SerializeField] public SpriteRenderer spriteRenderer;
     public Sprite[] spriteArrayP1;
 
