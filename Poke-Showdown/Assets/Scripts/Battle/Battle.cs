@@ -428,15 +428,6 @@ public class Battle : MonoBehaviour
    
     }
 
-    IEnumerator playLowHP()
-    {
-        yield return new WaitForSeconds(1f);
-        lowHP.Play();
-  
-
-    }
-
-
 
 
     public void chooseMove(int input)
@@ -576,8 +567,8 @@ public class Battle : MonoBehaviour
         if (currentHealth / targetHealth <= 0.160 && currentHealth / targetHealth > 0) //normalize percent value?
         {
 
-            mainBGM.FadeOut(1f);
-            StartCoroutine(playLowHP());
+            mainBGM.Stop();
+            lowHP.Play();
         }
 
 

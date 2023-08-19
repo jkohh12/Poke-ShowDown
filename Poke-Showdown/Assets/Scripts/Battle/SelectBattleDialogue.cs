@@ -12,6 +12,8 @@ public class SelectBattleDialogue : MonoBehaviour
 
     [SerializeField] private buttonChoose displayMoves;
 
+    [SerializeField] private AudioSource battleSelectSound;
+
     [Header("Overlays")]
     [SerializeField] private GameObject commandOverlay;
     [SerializeField] private GameObject button;
@@ -31,11 +33,22 @@ public class SelectBattleDialogue : MonoBehaviour
 
     public void moveSelection()
     {
-        gameObject.SetActive(false);
-        commandOverlay.gameObject.SetActive(false);
-        movesOverlay.gameObject.SetActive(true);
+        StartCoroutine(disableStartMenu());
+      
+       
+    }
 
+    IEnumerator disableStartMenu()
+    {
+        yield return new WaitForSeconds(1f);
+        commandOverlay.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+        movesOverlay.gameObject.SetActive(true);
         displayMoves.moveDisplay();
+    }
+    public void selectionSound()
+    {
+        battleSelectSound.Play();
     }
  
 }

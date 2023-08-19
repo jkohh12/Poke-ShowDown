@@ -15,6 +15,8 @@ public class buttonChoose : MonoBehaviour
     [SerializeField] public TextMeshProUGUI move3;
     [SerializeField] public TextMeshProUGUI move4;
 
+    [SerializeField] private AudioSource selectionSound;
+
 
     [SerializeField] private GameObject fightOverlay;
 
@@ -25,39 +27,52 @@ public class buttonChoose : MonoBehaviour
     public void moveSelect1()
     {
 
-
-
-        fightOverlay.gameObject.SetActive(false);
-
-
-        battle.chooseMove(0);
-
+        selectionSound.Play();
+        StartCoroutine(moveSelect1Delay());
     }
 
     public void moveSelect2()
     {
-
-        fightOverlay.gameObject.SetActive(false);
-
-        battle.chooseMove(1);
+        selectionSound.Play();
+        StartCoroutine(moveSelect2Delay());
     }
     public void moveSelect3()
     {
+        selectionSound.Play();
+        StartCoroutine(moveSelect3Delay());
 
-        fightOverlay.gameObject.SetActive(false);
-
-
-        battle.chooseMove(2);
     }
     public void moveSelect4()
     {
-
-
-        fightOverlay.gameObject.SetActive(false);
-
-        battle.chooseMove(3);
+        selectionSound.Play();
+        StartCoroutine(moveSelect4Delay());
     }
 
+    IEnumerator moveSelect1Delay()
+    {
+        yield return new WaitForSeconds(1f);
+        fightOverlay.gameObject.SetActive(false);
+        battle.chooseMove(0);
+    }
+
+    IEnumerator moveSelect2Delay()
+    {
+        yield return new WaitForSeconds(1f);
+        fightOverlay.gameObject.SetActive(false);
+        battle.chooseMove(1);
+    }
+    IEnumerator moveSelect3Delay()
+    {
+        yield return new WaitForSeconds(1f);
+        fightOverlay.gameObject.SetActive(false);
+        battle.chooseMove(2);
+    }
+    IEnumerator moveSelect4Delay()
+    {
+        yield return new WaitForSeconds(1f);
+        fightOverlay.gameObject.SetActive(false);
+        battle.chooseMove(3);
+    }
 
     public void moveDisplay()
     {
