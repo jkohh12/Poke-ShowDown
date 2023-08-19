@@ -339,6 +339,10 @@ public class EditorHelper : MonoBehaviour
     /// <param name="sprites"></param>
     /// <param name="loop"></param>
     /// <param name="frameRate"></param>
+    /// 
+
+    [MenuItem("PK Unity/CreateEventClip")]
+
     private static void createEventClip(Texture2D sprites)
     {
         AnimationClip clip = new AnimationClip();
@@ -408,6 +412,6 @@ public class EditorHelper : MonoBehaviour
         //return clip;
         //AnimationUtility.SetAnimationClipSettings(clip, acs);
         //AnimationUtility.SetObjectReferenceCurve(clip, spriteBinding, spriteKeyframes);
-        AssetDatabase.CreateAsset(clip, "assets/anims/pokemon/" + /*pokeNum +*/ ".anim");
+        AssetDatabase.CreateAsset(clip, "Assets/Animations/pokemon/" + ".anim");
     }
 }

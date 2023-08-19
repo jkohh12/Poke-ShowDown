@@ -21,6 +21,9 @@ public class PokeStatusTeam2 : MonoBehaviour
     [SerializeField] public P2HealthBar p2Health;
 
     [SerializeField] AudioSource LUGIA;
+
+    [Header("Sprite")]
+    [SerializeField] private p2Sprite sprite;
     public class Ability
     {
         public Ability ability { get; set; }
@@ -487,7 +490,11 @@ public class PokeStatusTeam2 : MonoBehaviour
                     typeGlobalP2 = pokestats.types;
 
 
+                    sprite.setUpSpriteP2(randNumberP2);
 
+                    p2Health.gameObject.SetActive(true);
+
+                    Debug.Log("READYP2");
 
                     //for debugging
 /*                    Debug.Log(pokestats.name);

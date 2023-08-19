@@ -19,10 +19,9 @@ public class p1Sprite : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void setUpSpriteP1(int rand)
     {
-        
-        randNum = pokeStatus.randNumberP1;
+       
 /*        string newRandNum = randNum.ToString();
         if(randNum < 10)
         {
@@ -33,7 +32,7 @@ public class p1Sprite : MonoBehaviour
             newRandNum = "0" + randNum.ToString();
         }*/
         //Debug.Log(randNum);
-        AsyncOperationHandle<Sprite[]> spriteHandle = Addressables.LoadAssetAsync<Sprite[]>("Assets/PokeSprites/BACK/" + randNum + ".png");
+        AsyncOperationHandle<Sprite[]> spriteHandle = Addressables.LoadAssetAsync<Sprite[]>("Assets/PokeSprites/BACK/" + rand + ".png");
         spriteHandle.Completed += LoadSpritesWhenReady;
 
     }
@@ -56,7 +55,7 @@ public class p1Sprite : MonoBehaviour
         
         spriteRenderer.sprite = spriteArrayP1[currentSprite];
         currentSprite++;
-        if (currentSprite >= spriteArrayP1.Length)
+        if (currentSprite >= spriteArrayP1.Length || SpriteRenderer.ReferenceEquals(spriteRenderer.sprite, null)) 
         {
             currentSprite = 0;
             spriteRenderer.sprite = spriteArrayP1[currentSprite];

@@ -11,6 +11,8 @@ public class Battle : MonoBehaviour
     [SerializeField] PokeStatusTeam1 P1;
     [SerializeField] PokeStatusTeam2 P2;
 
+
+
     [SerializeField] P1Moves P1MovesSource;
     [SerializeField] P2Moves P2MovesSource;
 
@@ -27,6 +29,8 @@ public class Battle : MonoBehaviour
     [SerializeField] SimpleFlash flashEffP2;
 
 
+
+
     [Header("Audio")]
     [SerializeField] private AudioSource[] effectivenessSound;
     [SerializeField] private AudioSource mainBGM;
@@ -36,8 +40,10 @@ public class Battle : MonoBehaviour
 
 /*    [SerializeField] GameObject newP1;
     [SerializeField] GameObject newP2;*/
-
+    
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private SelectBattleDialogue battleDialogue;
 
     private int indexVarP1;//onClick Variable
     private int indexVarP2; //onClick Variable
@@ -88,7 +94,9 @@ public class Battle : MonoBehaviour
         p2Name = P2.textP2.text;
         /*        Debug.Log(p1Name);
                 Debug.Log(p2Name);*/
-        dialogueText.text = "What will " + P1.textP1.text + " do?";
+
+        battleDialogue.whatWillPokeDo(p1Name);
+       // dialogueText.text = "What will " + P1.textP1.text + " do?";
         currentHealth = P1.statsGlobalP1[0].base_stat;
 
     }
@@ -97,11 +105,7 @@ public class Battle : MonoBehaviour
     void Update()
     {
 
-        //Testing
-        if (Input.GetButtonDown("Jump"))
-        {
-            chooseMove(0);
-        }
+        
 
         if (superEffectiveSound)
         {
@@ -221,7 +225,6 @@ public class Battle : MonoBehaviour
     IEnumerator effectivenessText()
     {
 
-        //TODO: Rework 
   
         if (superEffective)
         {
@@ -290,7 +293,7 @@ public class Battle : MonoBehaviour
     public void p1DialogueText()
     {
 
-        dialogueText.text = "What will " + P1.textP1.text + " do?";
+        battleDialogue.whatWillPokeDo(p1Name);
         canChooseMove = true;
 
     }
@@ -311,6 +314,7 @@ public class Battle : MonoBehaviour
         dialogueText.text = p1Name + " fainted!";
         P1.textP1.text = "";
         p1sprite.gameObject.SetActive(false);
+        P1HealthBarSource.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
         lowHP.FadeOut(1f);
         mainBGM.FadeOut(2f);
@@ -337,6 +341,7 @@ public class Battle : MonoBehaviour
         dialogueText.text = "The foe's " + p2Name + " fainted!";
         P2.textP2.text = "";
         p2sprite.gameObject.SetActive(false);
+        P2HealthBarSource.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
         mainBGM.FadeOut(2f);
         setVictoryText();
@@ -394,7 +399,7 @@ public class Battle : MonoBehaviour
 
     IEnumerator enemyMove()
     {
-        // p1Turn = false;
+        
         p2Turn = true;
         if(critHit)
         {
@@ -432,11 +437,14 @@ public class Battle : MonoBehaviour
     }
 
 
+
+
     public void chooseMove(int input)
     {
         if (canChooseMove && P2HealthBarSource.sliderP2.value != 0 && P1HealthBarSource.sliderP1.value != 0)
         {
 
+           
             enemyRandomMove = Random.Range(0, 3);
             p1Input = input;
 

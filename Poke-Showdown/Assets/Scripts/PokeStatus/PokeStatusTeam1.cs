@@ -23,6 +23,12 @@ public class PokeStatusTeam1 : MonoBehaviour
 
     [SerializeField] AudioSource LUGIA;
 
+
+    [Header("Sprites")]
+    [SerializeField] private p1Sprite sprite;
+
+  
+
     public class Ability
     {
         public Ability ability { get; set; }
@@ -487,6 +493,11 @@ public class PokeStatusTeam1 : MonoBehaviour
 
                     //type
                     typeGlobalP1 = pokestats.types;
+
+                    sprite.setUpSpriteP1(randNumberP1);
+
+                    p1Health.gameObject.SetActive(true);
+                    Debug.Log("READYP1");
 
                     //debug
                     //Debug.Log(pokestats.types[0].type.name);

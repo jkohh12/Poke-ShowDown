@@ -16,11 +16,11 @@ public class p2Sprite : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void setUpSpriteP2(int rand)
     {
 
         //use for multiple pokemon // setUpSpriteP2(); 
-        randNum = pokeStatus.randNumberP2;
+     
         /*        string newRandNum = randNum.ToString();
                 if (randNum < 10)
                 {
@@ -31,16 +31,12 @@ public class p2Sprite : MonoBehaviour
                     newRandNum = "0" + randNum.ToString();
                 }*/
         //Debug.Log(randNum);
-        AsyncOperationHandle<Sprite[]> spriteHandle = Addressables.LoadAssetAsync<Sprite[]>("Assets/PokeSprites/FRONT/" + randNum + ".png");
+        AsyncOperationHandle<Sprite[]> spriteHandle = Addressables.LoadAssetAsync<Sprite[]>("Assets/PokeSprites/FRONT/" + rand + ".png");
         spriteHandle.Completed += LoadSpritesWhenReady;
 
     }
 
-/*
-    public void setUpSpriteP2()
-    {
 
-    }*/
     private void LoadSpritesWhenReady(AsyncOperationHandle<Sprite[]> handleToCheck)
     {
         if (handleToCheck.Status == AsyncOperationStatus.Succeeded)
