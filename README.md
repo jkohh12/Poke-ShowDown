@@ -28,7 +28,7 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 * Super Effective/Not Effective/Normal Effective hit sound effects.
 * Move Selection with buttons.
 * Move Selection sounds.
-* Move Selection type display (with color).
+* Move Selection box has color displayed when hovering over move, as well as type displayed on the right.
 
 __Functionality in Unity Game Engine__
 
