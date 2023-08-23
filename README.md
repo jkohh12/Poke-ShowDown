@@ -29,6 +29,7 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 * Move Selection with buttons.
 * Move Selection sounds.
 * Move Selection box has color displayed when hovering over move, as well as type displayed on the right.
+* Only Attack moves implemented so far.
 
 __Functionality in Unity Game Engine__
 
