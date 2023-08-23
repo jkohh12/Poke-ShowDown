@@ -27,6 +27,8 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 * Victory Music.
 * Super Effective/Not Effective/Normal Effective hit sound effects.
 * Move Selection with buttons.
+* Move Selection sounds.
+* Move Selection type display (with color).
 
 __Functionality in Unity Game Engine__
 
