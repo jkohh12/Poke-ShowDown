@@ -60,7 +60,7 @@ public class p1Sprite : MonoBehaviour
             currentSprite = 0;
             spriteRenderer.sprite = spriteArrayP1[currentSprite];
         }
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         
         StartCoroutine(UpdateAnimation());
     }

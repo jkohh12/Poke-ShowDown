@@ -156,8 +156,8 @@ public class Battle : MonoBehaviour
             flashEffP2.Flash();
             
 
-            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 1f);
-            actionCounterP1 += 1f;
+            P2HealthBarSource.SetHealthP2((float)P2HealthBarSource.sliderP2.value - 0.5f);
+            actionCounterP1 += 0.5f;
             if(actionCounterP1 >= (float)damageResultP1)
             {
                 actionCounterP1 = 0;
@@ -179,8 +179,8 @@ public class Battle : MonoBehaviour
  
             flashEffP1.Flash();
             
-            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 1f);
-            actionCounterP2 += 1f;
+            P1HealthBarSource.SetHealthP1((float)P1HealthBarSource.sliderP1.value - 0.5f);
+            actionCounterP2 += 0.5f;
             if(actionCounterP2 >= (float)damageResultP2)
             {
               
