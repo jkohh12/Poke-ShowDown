@@ -13,7 +13,7 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 ## Link to Website GitHub: 
 [__Poke-Showdown-Deployment-Files__](https://github.com/jkohh12/Poke_React_Deployment)
 
-##Link to Website:
+## Link to Website:
 [__Website Link__](http://18.119.129.139/)
 
 
