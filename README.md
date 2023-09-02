@@ -17,6 +17,14 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 [__Website Link__](http://18.119.129.139/)
 
 
+## Website Screenshots
+
+![image](https://github.com/jkohh12/Poke-ShowDown/assets/136869443/b34e1a20-d20c-4d58-979a-4c2f00235961)
+
+![image](https://github.com/jkohh12/Poke-ShowDown/assets/136869443/dc1900a8-b388-498c-bee2-cbf990895312)
+
+![image](https://github.com/jkohh12/Poke-ShowDown/assets/136869443/f8604f82-a3d7-43d7-98af-8865ae8da9f3)
+
 ## Features (WIP)
 
 * Random Pokemon Generation. (PokeAPI)
@@ -42,13 +50,6 @@ __Functionality in Unity Game Engine__
 
 https://github.com/jkohh12/Poke-ShowDown/assets/136869443/eb1352ad-f297-4832-82c9-e4f13869c3de
 
-__Website Screenshots__
-
-![image](https://github.com/jkohh12/Poke-ShowDown/assets/136869443/b34e1a20-d20c-4d58-979a-4c2f00235961)
-
-![image](https://github.com/jkohh12/Poke-ShowDown/assets/136869443/dc1900a8-b388-498c-bee2-cbf990895312)
-
-![image](https://github.com/jkohh12/Poke-ShowDown/assets/136869443/f8604f82-a3d7-43d7-98af-8865ae8da9f3)
 
 
 
