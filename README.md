@@ -25,6 +25,9 @@ __Goal:__ Create/Replicate "Pokemon Showdown" using Unity along with PokeAPI (Re
 
 ![image](https://github.com/jkohh12/Poke-ShowDown/assets/136869443/f8604f82-a3d7-43d7-98af-8865ae8da9f3)
 
+![image](https://github.com/jkohh12/Poke-ShowDown/assets/136869443/2bcf1961-c40d-475b-9ae7-b58354214239)
+
+
 ## Features (WIP)
 
 * Random Pokemon Generation. (PokeAPI)
